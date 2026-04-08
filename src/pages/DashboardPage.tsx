@@ -9,13 +9,13 @@ const MOCK_DASHBOARD = {
     rest_points_active: 12,
   },
   top_points: [
-    { name: "Тамга", score: 77, transactions: 12, revenue: "54,200 сом", status: "🟢" },
-    { name: "Барскоон", score: 72, transactions: 8, revenue: "32,100 сом", status: "🟢" },
-    { name: "Каракол", score: 65, transactions: 15, revenue: "48,500 сом", status: "🟡" },
-    { name: "Чолпон-Ата", score: 62, transactions: 18, revenue: "62,000 сом", status: "🟡" },
-    { name: "Джети-Өгүз", score: 58, transactions: 5, revenue: "18,200 сом", status: "🟡" },
-    { name: "Бостери", score: 55, transactions: 10, revenue: "35,400 сом", status: "🟡" },
-    { name: "Балыкчы", score: 38, transactions: 2, revenue: "4,800 сом", status: "🔴" },
+    { name: "Тамга", tourism_score: 77, transactions_today: 12, revenue_som: 54200, status: "🟢" },
+    { name: "Барскоон", tourism_score: 72, transactions_today: 8, revenue_som: 32100, status: "🟢" },
+    { name: "Каракол", tourism_score: 65, transactions_today: 15, revenue_som: 48500, status: "🟡" },
+    { name: "Чолпон-Ата", tourism_score: 62, transactions_today: 18, revenue_som: 62000, status: "🟡" },
+    { name: "Джети-Өгүз", tourism_score: 58, transactions_today: 5, revenue_som: 18200, status: "🟡" },
+    { name: "Бостери", tourism_score: 55, transactions_today: 10, revenue_som: 35400, status: "🟡" },
+    { name: "Балыкчы", tourism_score: 38, transactions_today: 2, revenue_som: 4800, status: "🔴" },
   ],
   live_feed: [
     { time: "14:23", point: "Тамга", amount: "4,450 сом", tourist: "Marco", country: "Германия" },
@@ -46,9 +46,9 @@ interface Summary {
 interface TopPoint {
   status: string;
   name: string;
-  score: number;
-  transactions: number;
-  revenue: string;
+  tourism_score: number;
+  transactions_today: number;
+  revenue_som: number;
 }
 
 interface LiveFeedItem {
@@ -141,9 +141,9 @@ const DashboardPage = () => {
                   <tr key={i} className="border-b border-border last:border-0">
                     <td className="py-2 pr-4">{p.status}</td>
                     <td className="py-2 pr-4 font-medium text-foreground">{p.name}</td>
-                    <td className="py-2 pr-4">{p.score}</td>
-                    <td className="py-2 pr-4">{p.transactions}</td>
-                    <td className="py-2">{p.revenue}</td>
+                    <td className="py-2 pr-4">{p.tourism_score}</td>
+                    <td className="py-2 pr-4">{p.transactions_today}</td>
+                    <td className="py-2">{p.revenue_som.toLocaleString()} сом</td>
                   </tr>
                 ))}
               </tbody>
