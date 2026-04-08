@@ -143,7 +143,7 @@ const DashboardPage = () => {
                     <td className="py-2 pr-4 font-medium text-foreground">{p.name}</td>
                     <td className="py-2 pr-4">{p.tourism_score}</td>
                     <td className="py-2 pr-4">{p.transactions_today}</td>
-                    <td className="py-2">{p.revenue_som.toLocaleString()} сом</td>
+                    <td className="py-2">{typeof p.revenue_som === 'number' ? p.revenue_som.toLocaleString() + ' сом' : 'N/A'}</td>
                   </tr>
                 ))}
               </tbody>
