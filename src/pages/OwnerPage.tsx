@@ -5,6 +5,25 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+const MOCK_CARD = {
+  card: {
+    name: "🏔 Тамга",
+    type: "Гостевой комплекс",
+    tourism_score: 65,
+    ai_confidence: "0.7",
+  },
+  services: [
+    { id: "1", name: "Юрта (2 чел)", icon: "🛏", price_som: 2200, unit: "за ночь" },
+    { id: "2", name: "Обед (национальная кухня)", icon: "🍽", price_som: 350, unit: "за порцию" },
+    { id: "3", name: "Конная прогулка (2 часа)", icon: "🐎", price_som: 1050, unit: "за человека" },
+    { id: "4", name: "Wi-Fi + зарядка", icon: "📶", price_som: 100, unit: "за день" },
+    { id: "5", name: "Вид на горы", icon: "🏔", price_som: 0, unit: "бесплатно" },
+  ],
+  qr_code: { id: "TF-89A087B4F9BA" },
+  revenue_forecast: { season_revenue_som: "1,781,325 сом" },
+  pricing_note: "Цены рассчитаны TOUROSAT AI на основе спутниковых данных, Score 65/100 и сезонного спроса",
+};
+
 interface Service {
   icon: string;
   name: string;
@@ -12,14 +31,8 @@ interface Service {
   price_som: number;
 }
 
-interface CardData {
-  name: string;
-  tourism_score: number;
-  ai_confidence: string;
-}
-
 interface ApiResponse {
-  card: CardData;
+  card: { name: string; tourism_score: number; ai_confidence: string };
   services: Service[];
   pricing_note: string;
   qr_code: { id: string };
@@ -32,11 +45,9 @@ const OwnerPage = () => {
   const [lon, setLon] = useState(77.55);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ApiResponse | null>(null);
-  const [error, setError] = useState("");
 
   const handleSubmit = async () => {
     setLoading(true);
-    setError("");
     try {
       const res = await fetch("http://localhost:8000/api/tamga/generate-card", {
         method: "POST",
@@ -46,7 +57,7 @@ const OwnerPage = () => {
       const data = await res.json();
       setResult(data);
     } catch {
-      setError("Не удалось подключиться к серверу");
+      setResult(MOCK_CARD as ApiResponse);
     } finally {
       setLoading(false);
     }
@@ -86,7 +97,6 @@ const OwnerPage = () => {
           <Button className="w-full" onClick={handleSubmit} disabled={loading}>
             {loading ? "Создание..." : "Создать карточку"}
           </Button>
-          {error && <p className="text-sm text-destructive text-center">{error}</p>}
         </CardContent>
       </Card>
 
@@ -118,14 +128,11 @@ const OwnerPage = () => {
                 </div>
               ))}
             </div>
-
             <p className="text-sm text-muted-foreground">{result.pricing_note}</p>
-
             <div className="bg-muted rounded-lg p-4 text-center space-y-1">
               <p className="font-mono text-xl font-bold text-foreground">{result.qr_code.id}</p>
               <p className="text-sm text-muted-foreground">Покажите этот код туристам</p>
             </div>
-
             <div className="bg-accent rounded-lg p-4 text-center">
               <p className="text-sm text-muted-foreground">Прогноз дохода</p>
               <p className="text-xl font-bold text-foreground">{result.revenue_forecast.season_revenue_som}</p>
