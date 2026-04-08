@@ -64,16 +64,20 @@ const OwnerPage = () => {
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 70) return "bg-success text-success-foreground";
-    if (score >= 50) return "bg-warning text-warning-foreground";
-    return "bg-destructive text-destructive-foreground";
+    if (score >= 70) return "bg-green-100 text-green-800";
+    if (score >= 50) return "bg-yellow-100 text-yellow-800";
+    return "bg-red-100 text-red-800";
   };
 
   return (
     <div className="max-w-2xl mx-auto space-y-8 animate-fade-in">
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">Создайте карточку вашего Rest Point</h1>
-        <p className="text-muted-foreground">TOUROSAT AI рассчитает цены на основе спутниковых данных</p>
+        <h1 className="text-3xl font-bold text-foreground">
+          Создайте карточку вашего Rest Point
+        </h1>
+        <p className="text-muted-foreground">
+          TOUROSAT AI рассчитает цены на основе спутниковых данных
+        </p>
       </div>
 
       <Card>
@@ -87,15 +91,25 @@ const OwnerPage = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1">
               <label className="text-sm font-medium text-foreground">Широта</label>
-              <Input type="number" step="0.01" value={lat} onChange={(e) => setLat(Number(e.target.value))} />
+              <Input
+                type="number"
+                step="0.01"
+                value={lat}
+                onChange={(e) => setLat(Number(e.target.value))}
+              />
             </div>
             <div className="space-y-1">
               <label className="text-sm font-medium text-foreground">Долгота</label>
-              <Input type="number" step="0.01" value={lon} onChange={(e) => setLon(Number(e.target.value))} />
+              <Input
+                type="number"
+                step="0.01"
+                value={lon}
+                onChange={(e) => setLon(Number(e.target.value))}
+              />
             </div>
           </div>
           <Button className="w-full" onClick={handleSubmit} disabled={loading}>
-            {loading ? "Создание..." : "Создать карточку"}
+            {loading ? "⏳ AI анализирует спутниковые данные..." : "🛰 Создать карточку"}
           </Button>
         </CardContent>
       </Card>
@@ -109,7 +123,9 @@ const OwnerPage = () => {
                 Score: {result.card.tourism_score}/100
               </Badge>
             </div>
-            <p className="text-sm text-muted-foreground">AI Confidence: {result.card.ai_confidence}</p>
+            <p className="text-sm text-muted-foreground">
+              AI Confidence: {result.card.ai_confidence}
+            </p>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="divide-y divide-border">
@@ -121,21 +137,31 @@ const OwnerPage = () => {
                     <span className="text-xs text-muted-foreground">{s.unit}</span>
                   </div>
                   {s.price_som === 0 ? (
-                    <span className="text-sm font-medium text-primary">Бесплатно</span>
+                    <span className="text-sm font-medium text-green-600">Бесплатно</span>
                   ) : (
                     <span className="font-semibold text-foreground">{s.price_som} сом</span>
                   )}
                 </div>
               ))}
             </div>
-            <p className="text-sm text-muted-foreground">{result.pricing_note}</p>
+
+            <p className="text-sm text-muted-foreground italic">{result.pricing_note}</p>
+
             <div className="bg-muted rounded-lg p-4 text-center space-y-1">
-              <p className="font-mono text-xl font-bold text-foreground">{result.qr_code.id}</p>
-              <p className="text-sm text-muted-foreground">Покажите этот код туристам</p>
+              <p className="text-sm text-muted-foreground">QR код для туристов</p>
+              <p className="font-mono text-xl font-bold text-foreground">
+                {result.qr_code.id}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Покажите этот код туристам для оплаты
+              </p>
             </div>
+
             <div className="bg-accent rounded-lg p-4 text-center">
-              <p className="text-sm text-muted-foreground">Прогноз дохода</p>
-              <p className="text-xl font-bold text-foreground">{result.revenue_forecast.season_revenue_som}</p>
+              <p className="text-sm text-muted-foreground">📈 Прогноз дохода за сезон</p>
+              <p className="text-2xl font-bold text-foreground">
+                {result.revenue_forecast.season_revenue_som}
+              </p>
             </div>
           </CardContent>
         </Card>
