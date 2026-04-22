@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
+import { WeatherBadge } from "@/components/WeatherBadge";
 
 interface ServiceItem {
   icon: string;
@@ -27,23 +28,23 @@ interface PaymentResult {
 }
 
 const REST_POINTS = [
-  { name: "Тамга", score: 65, emoji: "🏔" },
-  { name: "Барскоон", score: 60, emoji: "🏔" },
-  { name: "Джети-Өгүз", score: 57, emoji: "🌲" },
-  { name: "Григорьевка", score: 63, emoji: "🏖" },
-  { name: "Тамга-Юг", score: 63, emoji: "🏔" },
-  { name: "Чолпон-Ата", score: 60, emoji: "🏖" },
-  { name: "Каракол", score: 68, emoji: "🏔" },
-  { name: "Семёновка", score: 57, emoji: "🌲" },
-  { name: "Алтын-Арашан", score: 47, emoji: "♨️" },
-  { name: "Ак-Суу", score: 63, emoji: "💧" },
-  { name: "Кара-Ой", score: 59, emoji: "🏖" },
-  { name: "Тон", score: 53, emoji: "🏔" },
-  { name: "Сон-Куль", score: 31, emoji: "🏕" },
-  { name: "Аныракай", score: 37, emoji: "🏜" },
-  { name: "Балыкчы", score: 27, emoji: "🌊" },
-  { name: "Кызыл-Суу", score: 61, emoji: "🏔" },
-  { name: "Чон-Кызыл-Суу", score: 54, emoji: "🏔" },
+  { name: "Тамга", score: 65, emoji: "🏔", lat: 42.15, lon: 77.55 },
+  { name: "Барскоон", score: 60, emoji: "🏔", lat: 42.12, lon: 77.62 },
+  { name: "Джети-Өгүз", score: 57, emoji: "🌲", lat: 42.33, lon: 78.23 },
+  { name: "Григорьевка", score: 63, emoji: "🏖", lat: 42.69, lon: 77.45 },
+  { name: "Тамга-Юг", score: 63, emoji: "🏔", lat: 42.13, lon: 77.56 },
+  { name: "Чолпон-Ата", score: 60, emoji: "🏖", lat: 42.64, lon: 77.08 },
+  { name: "Каракол", score: 68, emoji: "🏔", lat: 42.49, lon: 78.39 },
+  { name: "Семёновка", score: 57, emoji: "🌲", lat: 42.74, lon: 77.36 },
+  { name: "Алтын-Арашан", score: 47, emoji: "♨️", lat: 42.41, lon: 78.65 },
+  { name: "Ак-Суу", score: 63, emoji: "💧", lat: 42.45, lon: 78.55 },
+  { name: "Кара-Ой", score: 59, emoji: "🏖", lat: 42.66, lon: 77.20 },
+  { name: "Тон", score: 53, emoji: "🏔", lat: 42.10, lon: 77.00 },
+  { name: "Сон-Куль", score: 31, emoji: "🏕", lat: 41.85, lon: 75.13 },
+  { name: "Аныракай", score: 37, emoji: "🏜", lat: 42.20, lon: 76.40 },
+  { name: "Балыкчы", score: 27, emoji: "🌊", lat: 42.46, lon: 76.19 },
+  { name: "Кызыл-Суу", score: 61, emoji: "🏔", lat: 42.34, lon: 78.00 },
+  { name: "Чон-Кызыл-Суу", score: 54, emoji: "🏔", lat: 42.30, lon: 77.95 },
 ];
 
 const initialServices: ServiceItem[] = [
@@ -193,10 +194,19 @@ const TouristPage = () => {
             ))}
           </select>
           {currentPoint && (
-            <p className="text-sm text-muted-foreground mt-2">
-              {currentPoint.emoji} TOUROSAT Score: {currentPoint.score}/100
-              {currentPoint.score >= 60 ? " 🟢" : currentPoint.score >= 50 ? " 🟡" : " 🔴"}
-            </p>
+            <>
+              <p className="text-sm text-muted-foreground mt-2">
+                {currentPoint.emoji} TOUROSAT Score: {currentPoint.score}/100
+                {currentPoint.score >= 60 ? " 🟢" : currentPoint.score >= 50 ? " 🟡" : " 🔴"}
+              </p>
+              <div className="mt-2 p-2 rounded-md bg-accent">
+                <WeatherBadge
+                  lat={currentPoint.lat}
+                  lon={currentPoint.lon}
+                  prefix={`Сейчас в ${currentPoint.name}: `}
+                />
+              </div>
+            </>
           )}
         </CardContent>
       </Card>
