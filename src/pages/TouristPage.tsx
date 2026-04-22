@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -54,7 +55,19 @@ const initialServices: ServiceItem[] = [
 ];
 
 const TouristPage = () => {
-  const [selectedPoint, setSelectedPoint] = useState("Тамга");
+  const [searchParams] = useSearchParams();
+  const initialPoint = searchParams.get("point");
+  const [selectedPoint, setSelectedPoint] = useState(
+    initialPoint && REST_POINTS.some((p) => p.name === initialPoint)
+      ? initialPoint
+      : "Тамга"
+  );
+
+  useEffect(() => {
+    const p = searchParams.get("point");
+    if (p && REST_POINTS.some((r) => r.name === p)) setSelectedPoint(p);
+  }, [searchParams]);
+
   const [services, setServices] = useState(initialServices);
   const [name, setName] = useState("");
   const [country, setCountry] = useState("");
