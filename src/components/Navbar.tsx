@@ -4,6 +4,7 @@ const navItems = [
   { to: "/", label: "🏔 Главная" },
   { to: "/owner", label: "🏠 Владелец" },
   { to: "/tourist", label: "🎒 Турист" },
+  { to: "/map", label: "🗺 Карта" },
   { to: "/dashboard", label: "📊 Фонд" },
 ];
 
