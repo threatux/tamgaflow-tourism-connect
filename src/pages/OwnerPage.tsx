@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { WeatherBadge } from "@/components/WeatherBadge";
 
 const MOCK_CARD = {
   card: {
@@ -143,6 +144,13 @@ const OwnerPage = () => {
                   )}
                 </div>
               ))}
+            </div>
+
+            <div className="space-y-1">
+              <WeatherBadge lat={lat} lon={lon} variant="card" />
+              <p className="text-xs text-muted-foreground text-center">
+                Прогноз погоды учитывается в AI-ценообразовании TOUROSAT
+              </p>
             </div>
 
             <p className="text-sm text-muted-foreground italic">{result.pricing_note}</p>

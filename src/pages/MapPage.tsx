@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { REST_POINTS_GEO } from "@/data/restPoints";
+import { WeatherBadge } from "@/components/WeatherBadge";
 
 // Fix default marker icons (Leaflet + bundlers)
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -80,6 +81,10 @@ const MapPage = () => {
                     <p>
                       <span className="text-muted-foreground">Доход:</span>{" "}
                       <strong>{p.revenue_som.toLocaleString()} сом</strong>
+                    </p>
+                    <p className="flex items-center gap-1">
+                      <span className="text-muted-foreground">Текущая погода:</span>{" "}
+                      <WeatherBadge lat={p.lat} lon={p.lon} />
                     </p>
                   </div>
                   <Button
