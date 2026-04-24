@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,26 +6,29 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 220 20% 10%;
+    /* Background — soft cool light */
+    --background: 210 40% 98%;
+    --foreground: 215 30% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    --card-foreground: 215 30% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover-foreground: 215 30% 12%;
 
-    --primary: 152 100% 32.5%;
+    /* Issyk-Kul turquoise — primary */
+    --primary: 190 91% 36%;
     --primary-foreground: 0 0% 100%;
+    --primary-glow: 185 85% 50%;
 
-    --secondary: 150 20% 96%;
-    --secondary-foreground: 220 20% 10%;
+    --secondary: 190 30% 96%;
+    --secondary-foreground: 215 30% 12%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 210 30% 96%;
+    --muted-foreground: 215 16% 42%;
 
-    --accent: 150 20% 96%;
-    --accent-foreground: 220 20% 10%;
+    --accent: 190 50% 95%;
+    --accent-foreground: 215 30% 12%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -33,36 +36,51 @@
     --warning: 38 95% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --success: 152 100% 32.5%;
+    /* Gold — Kyrgyz accent */
+    --gold: 38 92% 50%;
+    --gold-foreground: 215 30% 12%;
+
+    /* Success — emerald */
+    --success: 160 84% 39%;
     --success-foreground: 0 0% 100%;
 
     /* Score / Split palette */
-    --score-excellent: 152 80% 38%;
-    --score-good: 210 90% 52%;
-    --score-medium: 32 95% 52%;
+    --score-excellent: 160 84% 39%;
+    --score-good: 200 90% 50%;
+    --score-medium: 38 92% 50%;
     --score-low: 0 75% 55%;
 
-    --split-owner: 152 80% 38%;
-    --split-platform: 210 90% 52%;
-    --split-fund: 42 92% 50%;
+    --split-owner: 160 84% 39%;
+    --split-platform: 200 90% 52%;
+    --split-fund: 38 92% 50%;
 
-    --gradient-premium: linear-gradient(135deg, hsl(152 100% 32.5%), hsl(168 85% 42%));
-    --shadow-premium: 0 12px 40px -12px hsl(152 60% 25% / 0.25);
+    /* Premium gradients */
+    --gradient-premium: linear-gradient(135deg, hsl(190 91% 36%), hsl(185 85% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(190 91% 36%) 0%, hsl(200 90% 45%) 50%, hsl(38 92% 50%) 100%);
+    --gradient-surface: linear-gradient(180deg, hsl(210 40% 98%) 0%, hsl(190 40% 96%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100% / 0.85), hsl(190 30% 98% / 0.7));
+    --gradient-gold: linear-gradient(135deg, hsl(38 92% 50%), hsl(45 95% 60%));
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 152 100% 32.5%;
+    /* Premium shadows */
+    --shadow-premium: 0 20px 50px -20px hsl(190 70% 30% / 0.35);
+    --shadow-glow: 0 0 60px -10px hsl(190 91% 36% / 0.45);
+    --shadow-card: 0 4px 24px -8px hsl(215 30% 20% / 0.08);
+    --shadow-elevated: 0 12px 40px -12px hsl(215 30% 20% / 0.18);
 
-    --radius: 0.75rem;
+    --border: 210 25% 90%;
+    --input: 210 25% 90%;
+    --ring: 190 91% 36%;
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 152 100% 32.5%;
+    --sidebar-primary: 190 91% 36%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 150 20% 96%;
+    --sidebar-accent: 190 50% 95%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 152 100% 32.5%;
+    --sidebar-border: 210 25% 90%;
+    --sidebar-ring: 190 91% 36%;
   }
 }
 
@@ -71,7 +89,55 @@
     @apply border-border;
   }
 
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
+    background-image:
+      radial-gradient(at 0% 0%, hsl(190 60% 92% / 0.6) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsl(38 80% 92% / 0.4) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, hsl(200 60% 94% / 0.4) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: hsl(0 0% 100% / 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid hsl(0 0% 100% / 0.6);
+  }
+
+  .glass-dark {
+    background: hsl(215 30% 12% / 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+  }
+
+  .text-gradient-premium {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .ornament-divider {
+    background-image: repeating-linear-gradient(
+      90deg,
+      hsl(var(--gold) / 0.4) 0,
+      hsl(var(--gold) / 0.4) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+    height: 2px;
   }
 }
