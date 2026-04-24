@@ -14,12 +14,12 @@ import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 const buildIcon = (status: string) => {
   const color =
-    status === "🟢" ? "#16a34a" : status === "🟡" ? "#eab308" : "#dc2626";
+    status === "🟢" ? "#10b981" : status === "🟡" ? "#f59e0b" : "#ef4444";
   return L.divIcon({
     className: "tamga-pin",
-    html: `<div style="background:${color};width:28px;height:28px;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:11px;">📍</div>`,
-    iconSize: [28, 28],
-    iconAnchor: [14, 14],
+    html: `<div style="position:relative;width:36px;height:36px;"><div style="position:absolute;inset:0;background:${color};border-radius:50%;opacity:0.3;animation:tamga-pulse 2s ease-out infinite;"></div><div style="position:relative;background:linear-gradient(135deg, ${color}, ${color}cc);width:36px;height:36px;border-radius:50%;border:3px solid white;box-shadow:0 6px 16px rgba(0,0,0,0.25), 0 0 0 1px ${color}55;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:14px;">📍</div></div><style>@keyframes tamga-pulse{0%{transform:scale(1);opacity:0.5}100%{transform:scale(2);opacity:0}}</style>`,
+    iconSize: [36, 36],
+    iconAnchor: [18, 18],
   });
 };
 
@@ -36,17 +36,22 @@ const MapPage = () => {
   }, []);
 
   return (
-    <div className="space-y-4 animate-fade-in">
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">
-          Rest Points региона Иссык-Куль
+    <div className="space-y-6 animate-fade-in max-w-6xl mx-auto">
+      <div className="text-center space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+            🛰 Live карта · Иссык-Куль
+          </span>
+        </div>
+        <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight">
+          Rest Points региона <span className="text-gradient-premium">Иссык-Куль</span>
         </h1>
         <p className="text-muted-foreground text-sm">
-          Кликните на маркер, чтобы увидеть данные точки
+          Кликните на маркер, чтобы увидеть данные точки и оплатить услуги
         </p>
       </div>
 
-      <div className="rounded-lg overflow-hidden border border-border shadow-sm h-[70vh]">
+      <div className="rounded-3xl overflow-hidden border border-border shadow-[var(--shadow-elevated)] h-[70vh] relative">
         <MapContainer
           center={[42.45, 77.5]}
           zoom={9}

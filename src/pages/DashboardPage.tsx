@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { Activity, Banknote, MapPin, TrendingUp } from "lucide-react";
 
 const MOCK_DASHBOARD = {
   summary: {
@@ -57,33 +58,30 @@ interface DashboardData {
   }>;
 }
 
-const statLabels = [
-  { key: "total_transactions" as const, label: "Транзакций" },
-  { key: "total_revenue_display" as const, label: "Общий доход" },
-  { key: "fund_share_display" as const, label: "Доля Фонда" },
-  { key: "rest_points_active" as const, label: "Rest Points" },
+const statCards = [
+  { key: "total_transactions" as const, label: "Транзакций", icon: Activity, accent: "primary" },
+  { key: "total_revenue_display" as const, label: "Общий доход", icon: Banknote, accent: "success" },
+  { key: "fund_share_display" as const, label: "Доля Фонда", icon: TrendingUp, accent: "gold" },
+  { key: "rest_points_active" as const, label: "Rest Points", icon: MapPin, accent: "primary" },
 ];
+
+const scoreColor = (score: number) => {
+  if (score >= 70) return "hsl(var(--score-excellent))";
+  if (score >= 50) return "hsl(var(--score-good))";
+  if (score >= 40) return "hsl(var(--score-medium))";
+  return "hsl(var(--score-low))";
+};
 
 const DashboardPage = () => {
   const [data, setData] = useState<DashboardData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("📡 Fetching dashboard...");
     fetch("http://localhost:8000/api/tamgaflow/dashboard")
-      .then((r) => {
-        console.log("📡 Response status:", r.status);
-        return r.json();
-      })
-      .then((json) => {
-        console.log("📡 Dashboard data:", json);
-        console.log("📡 Live feed:", json.live_feed);
-        console.log("📡 Live feed length:", json.live_feed?.length);
-        setData(json);
-      })
-      .catch((err) => {
-        console.error("❌ Fetch error:", err);
-        setError("Используем демо-данные");
+      .then((r) => r.json())
+      .then((json) => setData(json))
+      .catch(() => {
+        setError("Демо-данные");
         setData(MOCK_DASHBOARD as DashboardData);
       });
   }, []);
@@ -101,140 +99,206 @@ const DashboardPage = () => {
   const aiRecs = data.ai_recommendations || [];
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">
-          Дашборд Фонда поддержки туризма КР
+    <div className="space-y-10 animate-fade-in max-w-6xl mx-auto">
+      {/* Hero header */}
+      <div className="text-center space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+          <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
+          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+            Live Dashboard {error && `· ${error}`}
+          </span>
+        </div>
+        <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight">
+          Дашборд <span className="text-gradient-premium">Фонда</span> туризма КР
         </h1>
-        <p className="text-muted-foreground">
-          Powered by TOUROSAT AI (Sentinel-2 + SRTM + MODIS)
+        <p className="text-muted-foreground text-sm">
+          Powered by TOUROSAT AI · Sentinel-2 + SRTM + MODIS
         </p>
-        {error && <p className="text-sm text-yellow-500">{error}</p>}
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {statLabels.map(({ key, label }) => (
-          <Card key={key}>
-            <CardContent className="pt-6 text-center">
-              <p className="text-sm text-muted-foreground">{label}</p>
-              <p className="text-2xl font-bold text-foreground mt-1">
-                {String(data.summary?.[key] ?? "—")}
-              </p>
-            </CardContent>
-          </Card>
+        {statCards.map(({ key, label, icon: Icon, accent }, i) => (
+          <motion.div
+            key={key}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.08 }}
+            className="rounded-3xl p-5 bg-card border border-border shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-shadow"
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div
+                className={`h-10 w-10 rounded-xl flex items-center justify-center ${
+                  accent === "gold"
+                    ? "bg-gold/15 text-[hsl(var(--gold))]"
+                    : accent === "success"
+                    ? "bg-success/15 text-[hsl(var(--success))]"
+                    : "bg-primary/15 text-primary"
+                }`}
+              >
+                <Icon className="h-5 w-5" />
+              </div>
+            </div>
+            <p className="text-2xl md:text-3xl font-bold font-display text-foreground tabular-nums leading-none">
+              {String(data.summary?.[key] ?? "—")}
+            </p>
+            <p className="text-xs text-muted-foreground mt-2 font-medium">{label}</p>
+          </motion.div>
         ))}
       </div>
 
       {/* National context */}
-      <div className="bg-muted rounded-lg p-6 space-y-2">
-        <h3 className="font-semibold text-foreground">Национальный контекст</h3>
-        <p className="text-sm text-muted-foreground">
-          Туризм КР 2025: $1.098 млрд (+8.1%)
-        </p>
-        <p className="text-sm text-muted-foreground">
-          Проблема: 95% дохода в 5 местах
-        </p>
-        <p className="text-sm text-muted-foreground">
-          TamgaFlow: цифровая монетизация каждого Rest Point
-        </p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-3xl p-7 bg-gradient-to-br from-primary/5 via-card to-gold/5 border border-border shadow-[var(--shadow-card)]"
+      >
+        <div className="flex items-start gap-4">
+          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-2xl shrink-0 shadow-md">
+            🏔
+          </div>
+          <div className="space-y-1.5">
+            <h3 className="font-bold text-foreground font-display text-lg">Национальный контекст</h3>
+            <p className="text-sm text-muted-foreground">Туризм КР 2025: <span className="font-semibold text-foreground">$1.098 млрд</span> (+8.1%)</p>
+            <p className="text-sm text-muted-foreground">Проблема: <span className="font-semibold text-foreground">95% дохода в 5 местах</span></p>
+            <p className="text-sm text-muted-foreground">TamgaFlow: цифровая монетизация каждого Rest Point</p>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Top Points Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Топ Rest Points</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border text-left">
-                  <th className="py-2 pr-4 text-muted-foreground font-medium">Статус</th>
-                  <th className="py-2 pr-4 text-muted-foreground font-medium">Название</th>
-                  <th className="py-2 pr-4 text-muted-foreground font-medium">Score</th>
-                  <th className="py-2 pr-4 text-muted-foreground font-medium">Транзакций</th>
-                  <th className="py-2 text-muted-foreground font-medium">Доход</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topPoints.slice(0, 10).map((p, i) => (
-                  <tr key={i} className="border-b border-border last:border-0">
-                    <td className="py-2 pr-4">{p.status}</td>
-                    <td className="py-2 pr-4 font-medium text-foreground">{p.name}</td>
-                    <td className="py-2 pr-4">{p.tourism_score}</td>
-                    <td className="py-2 pr-4">{p.transactions_today}</td>
-                    <td className="py-2">
-                      {typeof p.revenue_som === "number"
-                        ? p.revenue_som.toLocaleString() + " сом"
-                        : "—"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Live Feed */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Живой поток ({liveFeed.length} записей)</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {liveFeed.length === 0 ? (
-            <p className="text-muted-foreground text-sm">
-              Пока нет транзакций. Сделайте оплату на странице Турист.
-            </p>
-          ) : (
-            <div className="space-y-0">
-              {liveFeed.slice(0, 15).map((item, i) => (
-                <div
+      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
+        <div className="p-6 border-b border-border">
+          <h2 className="text-xl font-bold font-display text-foreground">Топ Rest Points</h2>
+          <p className="text-sm text-muted-foreground mt-1">Ранжирование по TOUROSAT Score</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border bg-muted/30 text-left text-xs uppercase tracking-wider text-muted-foreground">
+                <th className="py-3 px-6 font-semibold">Статус</th>
+                <th className="py-3 px-4 font-semibold">Название</th>
+                <th className="py-3 px-4 font-semibold">Score</th>
+                <th className="py-3 px-4 font-semibold">Транзакций</th>
+                <th className="py-3 px-6 font-semibold text-right">Доход</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topPoints.slice(0, 10).map((p, i) => (
+                <motion.tr
                   key={i}
-                  className="flex items-center justify-between py-3 border-b border-border last:border-0"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: i * 0.04 }}
+                  className="border-b border-border last:border-0 hover:bg-muted/40 transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm text-muted-foreground w-12 font-mono">
-                      {item.time}
-                    </span>
-                    <span className="font-medium text-foreground">
-                      {item.point}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="font-bold text-green-600">
-                      {item.amount}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {item.tourist} ({item.country})
-                    </span>
-                  </div>
-                </div>
+                  <td className="py-3.5 px-6 text-lg">{p.status}</td>
+                  <td className="py-3.5 px-4 font-semibold text-foreground">{p.name}</td>
+                  <td className="py-3.5 px-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: `${p.tourism_score}%`,
+                            backgroundColor: scoreColor(p.tourism_score),
+                          }}
+                        />
+                      </div>
+                      <span
+                        className="font-bold tabular-nums text-sm"
+                        style={{ color: scoreColor(p.tourism_score) }}
+                      >
+                        {p.tourism_score}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="py-3.5 px-4 tabular-nums text-foreground">{p.transactions_today}</td>
+                  <td className="py-3.5 px-6 text-right font-semibold text-foreground tabular-nums">
+                    {typeof p.revenue_som === "number"
+                      ? p.revenue_som.toLocaleString("ru-RU") + " сом"
+                      : "—"}
+                  </td>
+                </motion.tr>
               ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* AI Recommendations */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">AI Рекомендации</h2>
-        <div className="grid md:grid-cols-2 gap-4">
-          {aiRecs.map((rec, i) => (
-            <Card key={i}>
-              <CardContent className="pt-6 flex gap-3">
-                <span className="text-2xl">🤖</span>
-                <p className="text-sm text-foreground">{rec.message}</p>
-              </CardContent>
-            </Card>
-          ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="text-center text-xs text-muted-foreground pt-4 border-t border-border">
-        © 2025 TamgaFlow | Team THREATUX | Tourism Revenue Hackathon
+      {/* Live Feed */}
+      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
+        <div className="p-6 border-b border-border flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold font-display text-foreground">Живой поток</h2>
+            <p className="text-sm text-muted-foreground mt-1">{liveFeed.length} последних транзакций</p>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-success/10 border border-success/30">
+            <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--success))] animate-pulse" />
+            <span className="text-xs font-bold text-[hsl(var(--success))] uppercase tracking-wider">Live</span>
+          </div>
+        </div>
+        <div className="divide-y divide-border">
+          {liveFeed.length === 0 ? (
+            <p className="p-6 text-muted-foreground text-sm text-center">
+              Пока нет транзакций. Сделайте оплату на странице Турист.
+            </p>
+          ) : (
+            liveFeed.slice(0, 15).map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.04 }}
+                className="flex items-center justify-between p-4 hover:bg-muted/40 transition-colors"
+              >
+                <div className="flex items-center gap-4 min-w-0">
+                  <span className="text-xs text-muted-foreground w-12 font-mono shrink-0">{item.time}</span>
+                  <div className="h-9 w-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-sm font-bold shrink-0">
+                    📍
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-foreground truncate">{item.point}</p>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {item.tourist} · {item.country}
+                    </p>
+                  </div>
+                </div>
+                <span className="font-bold text-[hsl(var(--success))] tabular-nums shrink-0">
+                  +{item.amount}
+                </span>
+              </motion.div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* AI Recommendations */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-sm">
+            🤖
+          </div>
+          <h2 className="text-xl font-bold font-display text-foreground">AI Рекомендации</h2>
+        </div>
+        <div className="grid md:grid-cols-3 gap-4">
+          {aiRecs.map((rec, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="rounded-2xl p-5 bg-card border border-border hover:border-primary/40 hover:shadow-[var(--shadow-card)] transition-all"
+            >
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-base shrink-0">
+                  🤖
+                </div>
+                <p className="text-sm text-foreground leading-relaxed">{rec.message}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
