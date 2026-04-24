@@ -30,11 +30,24 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --warning: 45 93% 47%;
+    --warning: 38 95% 50%;
     --warning-foreground: 0 0% 100%;
 
     --success: 152 100% 32.5%;
     --success-foreground: 0 0% 100%;
+
+    /* Score / Split palette */
+    --score-excellent: 152 80% 38%;
+    --score-good: 210 90% 52%;
+    --score-medium: 32 95% 52%;
+    --score-low: 0 75% 55%;
+
+    --split-owner: 152 80% 38%;
+    --split-platform: 210 90% 52%;
+    --split-fund: 42 92% 50%;
+
+    --gradient-premium: linear-gradient(135deg, hsl(152 100% 32.5%), hsl(168 85% 42%));
+    --shadow-premium: 0 12px 40px -12px hsl(152 60% 25% / 0.25);
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
