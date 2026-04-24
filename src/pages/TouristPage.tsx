@@ -236,7 +236,7 @@ const TouristPage = () => {
           <select
             value={selectedPoint}
             onChange={(e) => setSelectedPoint(e.target.value)}
-            className="w-full p-3 rounded-md border border-border bg-background text-foreground text-base"
+            className="w-full p-3.5 rounded-xl border border-border bg-background text-foreground text-base font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
           >
             {REST_POINTS.map((p) => (
               <option key={p.name} value={p.name}>
@@ -253,7 +253,7 @@ const TouristPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.3 }}
-                className="flex flex-col items-center gap-3 pt-2"
+                className="flex flex-col items-center gap-4 pt-4"
               >
                 <TourosatScore
                   score={currentPoint.score}
@@ -270,75 +270,84 @@ const TouristPage = () => {
               </motion.div>
             </AnimatePresence>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Услуги */}
-      <Card>
-        <CardContent className="pt-6 space-y-1">
+      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
+        <div className="p-4 space-y-1">
           {services.map((s, i) => (
             <label
               key={i}
-              className="flex items-center justify-between py-3 cursor-pointer hover:bg-accent rounded-md px-2 transition-colors"
+              className="flex items-center justify-between py-3 px-3 cursor-pointer hover:bg-accent rounded-xl transition-colors"
               onClick={() => toggleService(i)}
             >
               <div className="flex items-center gap-3">
                 <Checkbox checked={s.checked} onCheckedChange={() => toggleService(i)} />
-                <span className="text-lg">{s.icon}</span>
-                <span className="text-foreground">{s.name}</span>
+                <span className="text-xl">{s.icon}</span>
+                <span className="text-foreground font-medium">{s.name}</span>
               </div>
-              <span className="font-semibold text-foreground tabular-nums">
-                {s.price_som.toLocaleString("ru-RU")} сом
+              <span className="font-bold text-foreground tabular-nums">
+                {s.price_som.toLocaleString("ru-RU")} <span className="text-xs text-muted-foreground font-medium">сом</span>
               </span>
             </label>
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Total + live split */}
-      <Card>
-        <CardContent className="pt-6 space-y-4">
+      <div className="rounded-3xl bg-gradient-to-br from-card to-accent/40 border border-border shadow-[var(--shadow-card)] overflow-hidden">
+        <div className="p-6 space-y-5">
           <div className="flex items-baseline justify-between">
-            <span className="text-sm text-muted-foreground">Итого к оплате</span>
+            <span className="text-xs uppercase tracking-wider text-muted-foreground font-bold">
+              Итого к оплате
+            </span>
             <motion.span
               key={total}
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-3xl font-bold text-foreground tabular-nums"
+              className="text-4xl font-bold font-display text-foreground tabular-nums"
             >
-              {total.toLocaleString("ru-RU")} <span className="text-base font-medium text-muted-foreground">сом</span>
+              {total.toLocaleString("ru-RU")}{" "}
+              <span className="text-base font-medium text-muted-foreground">сом</span>
             </motion.span>
           </div>
           {total > 0 && <SplitVisualization total={total} />}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Имя и страна */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">Имя</label>
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Имя</label>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Ваше имя"
+            className="h-11 rounded-xl"
           />
         </div>
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">Страна</label>
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Страна</label>
           <Input
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             placeholder="Ваша страна"
+            className="h-11 rounded-xl"
           />
         </div>
       </div>
 
       <Button
-        className="w-full h-14 text-lg font-semibold shadow-[var(--shadow-premium)]"
+        className="w-full h-16 text-lg font-bold rounded-2xl shadow-[var(--shadow-premium)] bg-gradient-to-br from-primary to-primary-glow hover:opacity-95 active:scale-[0.99] transition"
         onClick={handlePay}
         disabled={loading || total === 0}
       >
-        {loading ? "Обработка..." : `Оплатить ${total.toLocaleString("ru-RU")} сом`}
+        {loading
+          ? "⏳ Обработка..."
+          : total === 0
+          ? "Выберите услуги"
+          : `Оплатить ${total.toLocaleString("ru-RU")} сом →`}
       </Button>
 
       {error && <p className="text-sm text-destructive text-center">{error}</p>}
