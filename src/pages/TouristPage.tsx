@@ -5,6 +5,10 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { WeatherBadge } from "@/components/WeatherBadge";
+import { TourosatScore } from "@/components/TourosatScore";
+import { SplitVisualization } from "@/components/SplitVisualization";
+import { motion, AnimatePresence } from "framer-motion";
+import confetti from "canvas-confetti";
 
 interface ServiceItem {
   icon: string;
@@ -83,6 +87,39 @@ const TouristPage = () => {
     setServices((prev) => prev.map((s, i) => (i === index ? { ...s, checked: !s.checked } : s)));
   };
 
+  const fireConfetti = () => {
+    const primary = "#00A651";
+    const gold = "#F5B700";
+    confetti({
+      particleCount: 120,
+      spread: 80,
+      origin: { y: 0.4 },
+      colors: [primary, gold, "#3B82F6", "#ffffff"],
+    });
+    setTimeout(
+      () =>
+        confetti({
+          particleCount: 80,
+          spread: 100,
+          angle: 60,
+          origin: { x: 0, y: 0.6 },
+          colors: [primary, gold],
+        }),
+      200
+    );
+    setTimeout(
+      () =>
+        confetti({
+          particleCount: 80,
+          spread: 100,
+          angle: 120,
+          origin: { x: 1, y: 0.6 },
+          colors: [primary, gold],
+        }),
+      400
+    );
+  };
+
   const handlePay = async () => {
     const selected = services.filter((s) => s.checked);
     if (!selected.length) return;
@@ -103,6 +140,7 @@ const TouristPage = () => {
       });
       const data = await res.json();
       setReceipt({ ...data, point_name: selectedPoint });
+      fireConfetti();
     } catch {
       setReceipt({
         total_som: total,
@@ -115,6 +153,7 @@ const TouristPage = () => {
         message: `✅ Спасибо, ${name}! Вы поддержали село и туризм Кыргызстана.`,
         point_name: selectedPoint,
       });
+      fireConfetti();
     } finally {
       setLoading(false);
     }
@@ -122,35 +161,53 @@ const TouristPage = () => {
 
   if (receipt) {
     return (
-      <div className="max-w-md mx-auto animate-fade-in">
-        <Card>
-          <CardContent className="pt-6 space-y-6 text-center">
-            <div className="text-6xl">✅</div>
-            <h2 className="text-2xl font-bold text-primary">Оплата прошла!</h2>
-            <p className="text-lg text-muted-foreground">
-              📍 {receipt.point_name}
-            </p>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-md mx-auto"
+      >
+        <Card className="overflow-hidden border-2 shadow-[var(--shadow-premium)]">
+          <div
+            className="px-6 py-8 text-center text-primary-foreground"
+            style={{ background: "var(--gradient-premium)" }}
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 12 }}
+              className="text-7xl mb-2"
+            >
+              ✅
+            </motion.div>
+            <h2 className="text-2xl font-bold">Оплата прошла!</h2>
+            <p className="text-sm opacity-90 mt-1">📍 {receipt.point_name}</p>
+          </div>
 
-            <div className="divide-y divide-border text-left">
+          <CardContent className="pt-6 space-y-6">
+            <div className="text-center">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">Итого</p>
+              <p className="text-4xl font-bold text-foreground tabular-nums">
+                {receipt.total_som.toLocaleString("ru-RU")} <span className="text-lg font-medium text-muted-foreground">сом</span>
+              </p>
+            </div>
+
+            <div className="divide-y divide-border text-left text-sm">
               {receipt.services.map((s, i) => (
                 <div key={i} className="flex justify-between py-2">
                   <span>{s.icon} {s.name}</span>
-                  <span className="font-medium">{s.price_som} сом</span>
+                  <span className="font-medium tabular-nums">
+                    {s.price_som.toLocaleString("ru-RU")} сом
+                  </span>
                 </div>
               ))}
             </div>
 
-            <div className="text-xl font-bold text-foreground">
-              Итого: {receipt.total_som} сом
+            <div className="rounded-lg border p-4">
+              <SplitVisualization total={receipt.total_som} />
             </div>
 
-            <div className="bg-muted rounded-lg p-4 space-y-2 text-sm text-left">
-              <p>👤 Владелец: {receipt.split.owner.amount_som} сом (88%)</p>
-              <p>🔧 TamgaFlow: {receipt.split.platform.amount_som} сом (7%)</p>
-              <p>🏛 Фонд КР: {receipt.split.fund.amount_som} сом (5%)</p>
-            </div>
-
-            <p className="text-sm text-muted-foreground">{receipt.message}</p>
+            <p className="text-sm text-center text-muted-foreground">{receipt.message}</p>
 
             <Button
               variant="outline"
@@ -166,7 +223,7 @@ const TouristPage = () => {
             </Button>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
     );
   }
 
@@ -176,10 +233,10 @@ const TouristPage = () => {
         Оплата услуг Rest Point
       </h1>
 
-      {/* Выбор Rest Point */}
-      <Card>
-        <CardContent className="pt-6">
-          <label className="text-sm font-medium text-foreground block mb-2">
+      {/* Выбор Rest Point с TOUROSAT Score */}
+      <Card className="overflow-hidden">
+        <CardContent className="pt-6 space-y-4">
+          <label className="text-sm font-medium text-foreground block">
             📍 Выберите Rest Point
           </label>
           <select
@@ -193,20 +250,31 @@ const TouristPage = () => {
               </option>
             ))}
           </select>
+
           {currentPoint && (
-            <>
-              <p className="text-sm text-muted-foreground mt-2">
-                {currentPoint.emoji} TOUROSAT Score: {currentPoint.score}/100
-                {currentPoint.score >= 60 ? " 🟢" : currentPoint.score >= 50 ? " 🟡" : " 🔴"}
-              </p>
-              <div className="mt-2 p-2 rounded-md bg-accent">
-                <WeatherBadge
-                  lat={currentPoint.lat}
-                  lon={currentPoint.lon}
-                  prefix={`Сейчас в ${currentPoint.name}: `}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentPoint.name}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center gap-3 pt-2"
+              >
+                <TourosatScore
+                  score={currentPoint.score}
+                  confidence={0.87}
+                  size="lg"
                 />
-              </div>
-            </>
+                <div className="w-full">
+                  <WeatherBadge
+                    lat={currentPoint.lat}
+                    lon={currentPoint.lon}
+                    variant="card"
+                  />
+                </div>
+              </motion.div>
+            </AnimatePresence>
           )}
         </CardContent>
       </Card>
@@ -225,15 +293,31 @@ const TouristPage = () => {
                 <span className="text-lg">{s.icon}</span>
                 <span className="text-foreground">{s.name}</span>
               </div>
-              <span className="font-semibold text-foreground">{s.price_som} сом</span>
+              <span className="font-semibold text-foreground tabular-nums">
+                {s.price_som.toLocaleString("ru-RU")} сом
+              </span>
             </label>
           ))}
         </CardContent>
       </Card>
 
-      <div className="text-center text-xl font-bold text-foreground">
-        Итого: {total} сом
-      </div>
+      {/* Total + live split */}
+      <Card>
+        <CardContent className="pt-6 space-y-4">
+          <div className="flex items-baseline justify-between">
+            <span className="text-sm text-muted-foreground">Итого к оплате</span>
+            <motion.span
+              key={total}
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl font-bold text-foreground tabular-nums"
+            >
+              {total.toLocaleString("ru-RU")} <span className="text-base font-medium text-muted-foreground">сом</span>
+            </motion.span>
+          </div>
+          {total > 0 && <SplitVisualization total={total} />}
+        </CardContent>
+      </Card>
 
       {/* Имя и страна */}
       <div className="grid grid-cols-2 gap-4">
@@ -256,11 +340,11 @@ const TouristPage = () => {
       </div>
 
       <Button
-        className="w-full"
+        className="w-full h-14 text-lg font-semibold shadow-[var(--shadow-premium)]"
         onClick={handlePay}
         disabled={loading || total === 0}
       >
-        {loading ? "Обработка..." : `Оплатить ${total} сом`}
+        {loading ? "Обработка..." : `Оплатить ${total.toLocaleString("ru-RU")} сом`}
       </Button>
 
       {error && <p className="text-sm text-destructive text-center">{error}</p>}
