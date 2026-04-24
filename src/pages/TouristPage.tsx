@@ -151,54 +151,71 @@ const TouristPage = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-md mx-auto"
       >
-        <Card className="overflow-hidden border-2 shadow-[var(--shadow-premium)]">
+        <div className="rounded-3xl overflow-hidden border border-border shadow-[var(--shadow-premium)] bg-card">
           <div
-            className="px-6 py-8 text-center text-primary-foreground"
-            style={{ background: "var(--gradient-premium)" }}
+            className="px-6 py-10 text-center text-primary-foreground relative overflow-hidden"
+            style={{ background: "var(--gradient-hero)" }}
           >
+            <div className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 20% 30%, white 1px, transparent 2px), radial-gradient(circle at 80% 70%, white 1px, transparent 2px)",
+                backgroundSize: "40px 40px",
+              }}
+            />
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, damping: 12 }}
-              className="text-7xl mb-2"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 14, delay: 0.1 }}
+              className="relative inline-flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur mb-3 shadow-lg"
             >
-              ✅
+              <span className="text-5xl">✅</span>
             </motion.div>
-            <h2 className="text-2xl font-bold">Оплата прошла!</h2>
-            <p className="text-sm opacity-90 mt-1">📍 {receipt.point_name}</p>
+            <motion.h2
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-3xl font-bold font-display"
+            >
+              Оплата прошла!
+            </motion.h2>
+            <p className="text-sm opacity-90 mt-2 font-medium">📍 {receipt.point_name}</p>
           </div>
 
-          <CardContent className="pt-6 space-y-6">
-            <div className="text-center">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">Итого</p>
-              <p className="text-4xl font-bold text-foreground tabular-nums">
-                {receipt.total_som.toLocaleString("ru-RU")} <span className="text-lg font-medium text-muted-foreground">сом</span>
-              </p>
+          <div className="p-6 space-y-6">
+            <div className="text-center -mt-12 relative">
+              <div className="inline-block bg-card rounded-2xl px-6 py-4 border border-border shadow-[var(--shadow-elevated)]">
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Итого</p>
+                <p className="text-4xl font-bold font-display text-foreground tabular-nums leading-tight">
+                  {receipt.total_som.toLocaleString("ru-RU")}{" "}
+                  <span className="text-lg font-medium text-muted-foreground">сом</span>
+                </p>
+              </div>
             </div>
 
-            <div className="divide-y divide-border text-left text-sm">
+            <div className="divide-y divide-border text-left text-sm rounded-2xl border border-border overflow-hidden">
               {receipt.services.map((s, i) => (
-                <div key={i} className="flex justify-between py-2">
-                  <span>{s.icon} {s.name}</span>
-                  <span className="font-medium tabular-nums">
+                <div key={i} className="flex justify-between py-3 px-4 bg-muted/20">
+                  <span className="font-medium">{s.icon} {s.name}</span>
+                  <span className="font-semibold tabular-nums">
                     {s.price_som.toLocaleString("ru-RU")} сом
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="rounded-lg border p-4">
+            <div className="rounded-2xl border border-border p-5 bg-muted/20">
               <SplitVisualization total={receipt.total_som} />
             </div>
 
-            <p className="text-sm text-center text-muted-foreground">{receipt.message}</p>
+            <p className="text-sm text-center text-muted-foreground italic px-4">{receipt.message}</p>
 
             <Button
               variant="outline"
-              className="w-full"
+              className="w-full h-12 rounded-xl font-semibold"
               onClick={() => {
                 setReceipt(null);
                 setServices(initialServices);
@@ -208,8 +225,8 @@ const TouristPage = () => {
             >
               Новая оплата
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </motion.div>
     );
   }

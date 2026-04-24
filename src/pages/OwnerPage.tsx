@@ -69,98 +69,117 @@ const OwnerPage = () => {
 
   return (
     <div className="max-w-2xl mx-auto space-y-8 animate-fade-in">
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">
-          Создайте карточку вашего Rest Point
+      <div className="text-center space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+            🏠 Карточка владельца
+          </span>
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
+          Создайте карточку <span className="text-gradient-premium">Rest Point</span>
         </h1>
         <p className="text-muted-foreground">
           TOUROSAT AI рассчитает цены на основе спутниковых данных
         </p>
       </div>
 
-      <Card>
-        <CardContent className="pt-6 space-y-4">
-          <Textarea
-            placeholder="Опишите ваш Rest Point: сколько юрт, есть ли кафе, Wi-Fi, какие активности, что рядом..."
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={4}
-          />
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-foreground">Широта</label>
-              <Input
-                type="number"
-                step="0.01"
-                value={lat}
-                onChange={(e) => setLat(Number(e.target.value))}
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-foreground">Долгота</label>
-              <Input
-                type="number"
-                step="0.01"
-                value={lon}
-                onChange={(e) => setLon(Number(e.target.value))}
-              />
-            </div>
+      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] p-6 space-y-4">
+        <Textarea
+          placeholder="Опишите ваш Rest Point: сколько юрт, есть ли кафе, Wi-Fi, какие активности, что рядом..."
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows={4}
+          className="rounded-xl resize-none"
+        />
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Широта</label>
+            <Input
+              type="number"
+              step="0.01"
+              value={lat}
+              onChange={(e) => setLat(Number(e.target.value))}
+              className="h-11 rounded-xl"
+            />
           </div>
-          <Button className="w-full" onClick={handleSubmit} disabled={loading}>
-            {loading ? "⏳ AI анализирует спутниковые данные..." : "🛰 Создать карточку"}
-          </Button>
-        </CardContent>
-      </Card>
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Долгота</label>
+            <Input
+              type="number"
+              step="0.01"
+              value={lon}
+              onChange={(e) => setLon(Number(e.target.value))}
+              className="h-11 rounded-xl"
+            />
+          </div>
+        </div>
+        <Button
+          className="w-full h-14 text-base font-bold rounded-2xl shadow-[var(--shadow-premium)] bg-gradient-to-br from-primary to-primary-glow"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? "⏳ AI анализирует спутниковые данные..." : "🛰 Создать карточку"}
+        </Button>
+      </div>
 
       {result && (
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          <Card className="overflow-hidden border-2 shadow-[var(--shadow-premium)]">
+          <div className="rounded-3xl overflow-hidden border border-border shadow-[var(--shadow-premium)] bg-card">
             {/* Hero score */}
-            <div className="bg-gradient-to-br from-accent to-background px-6 py-8 flex flex-col items-center text-center gap-4">
-              <h2 className="text-3xl font-bold text-foreground">{result.card.name}</h2>
-              <TourosatScore
-                score={result.card.tourism_score}
-                confidence={parseFloat(result.card.ai_confidence)}
-                size="xl"
-              />
+            <div
+              className="px-6 py-10 flex flex-col items-center text-center gap-4 relative overflow-hidden"
+              style={{ background: "var(--gradient-surface)" }}
+            >
+              <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary/15 rounded-full blur-3xl" />
+              <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-gold/10 rounded-full blur-3xl" />
+              <div className="relative">
+                <h2 className="text-3xl font-bold font-display text-foreground mb-6">{result.card.name}</h2>
+                <TourosatScore
+                  score={result.card.tourism_score}
+                  confidence={parseFloat(result.card.ai_confidence)}
+                  size="xl"
+                />
+              </div>
             </div>
 
-            <CardContent className="space-y-6 pt-6">
-              <div className="divide-y divide-border">
+            <div className="p-6 space-y-6">
+              <div className="rounded-2xl border border-border overflow-hidden divide-y divide-border">
                 {result.services.map((s, i) => (
-                  <div key={i} className="flex items-center justify-between py-3">
-                    <div className="flex items-center gap-2">
+                  <div key={i} className="flex items-center justify-between py-3 px-4 hover:bg-muted/40 transition-colors">
+                    <div className="flex items-center gap-2.5">
                       <span className="text-lg">{s.icon}</span>
-                      <span className="font-medium text-foreground">{s.name}</span>
-                      <span className="text-xs text-muted-foreground">{s.unit}</span>
+                      <div>
+                        <p className="font-semibold text-foreground text-sm">{s.name}</p>
+                        <p className="text-xs text-muted-foreground">{s.unit}</p>
+                      </div>
                     </div>
                     {s.price_som === 0 ? (
-                      <span className="text-sm font-medium text-primary">Бесплатно</span>
+                      <span className="text-xs font-bold text-primary uppercase tracking-wider px-2 py-1 rounded-full bg-primary/10">Бесплатно</span>
                     ) : (
-                      <span className="font-semibold text-foreground tabular-nums">
-                        {s.price_som.toLocaleString("ru-RU")} сом
+                      <span className="font-bold text-foreground tabular-nums">
+                        {s.price_som.toLocaleString("ru-RU")} <span className="text-xs font-medium text-muted-foreground">сом</span>
                       </span>
                     )}
                   </div>
                 ))}
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-2">
                 <WeatherBadge lat={lat} lon={lon} variant="card" />
-                <p className="text-xs text-muted-foreground text-center">
+                <p className="text-xs text-muted-foreground text-center italic">
                   Прогноз погоды учитывается в AI-ценообразовании TOUROSAT
                 </p>
               </div>
 
-              <p className="text-sm text-muted-foreground italic">{result.pricing_note}</p>
+              <p className="text-sm text-muted-foreground italic text-center px-2">{result.pricing_note}</p>
 
-              <div className="bg-muted rounded-lg p-4 text-center space-y-1">
-                <p className="text-sm text-muted-foreground">QR код для туристов</p>
-                <p className="font-mono text-xl font-bold text-foreground">
+              <div className="rounded-2xl border-2 border-dashed border-border p-5 text-center space-y-2 bg-muted/20">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">QR код для туристов</p>
+                <p className="font-mono text-2xl font-bold text-foreground tracking-wider">
                   {result.qr_code.id}
                 </p>
                 <p className="text-xs text-muted-foreground">
@@ -169,16 +188,25 @@ const OwnerPage = () => {
               </div>
 
               <div
-                className="rounded-lg p-5 text-center text-primary-foreground"
-                style={{ background: "var(--gradient-premium)" }}
+                className="rounded-2xl p-6 text-center text-primary-foreground relative overflow-hidden shadow-[var(--shadow-premium)]"
+                style={{ background: "var(--gradient-hero)" }}
               >
-                <p className="text-sm opacity-90">📈 Прогноз дохода за сезон</p>
-                <p className="text-3xl font-bold tracking-tight">
-                  {result.revenue_forecast.season_revenue_som}
-                </p>
+                <div className="absolute inset-0 opacity-15"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(circle at 30% 20%, white 1px, transparent 2px), radial-gradient(circle at 70% 80%, white 1px, transparent 2px)",
+                    backgroundSize: "50px 50px",
+                  }}
+                />
+                <div className="relative">
+                  <p className="text-xs uppercase tracking-widest opacity-90 font-bold">📈 Прогноз дохода за сезон</p>
+                  <p className="text-4xl font-bold font-display tracking-tight mt-2">
+                    {result.revenue_forecast.season_revenue_som}
+                  </p>
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </motion.div>
       )}
     </div>
