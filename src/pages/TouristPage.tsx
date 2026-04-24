@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent } from "@/components/ui/card";
+
 import { WeatherBadge } from "@/components/WeatherBadge";
 import { TourosatScore } from "@/components/TourosatScore";
 import { SplitVisualization } from "@/components/SplitVisualization";
@@ -88,35 +88,22 @@ const TouristPage = () => {
   };
 
   const fireConfetti = () => {
-    const primary = "#00A651";
-    const gold = "#F5B700";
-    confetti({
-      particleCount: 120,
-      spread: 80,
-      origin: { y: 0.4 },
-      colors: [primary, gold, "#3B82F6", "#ffffff"],
-    });
+    const primary = "#0891b2";
+    const gold = "#f59e0b";
+    const success = "#10b981";
+    const palette = [primary, gold, success, "#3B82F6", "#ffffff"];
+    confetti({ particleCount: 160, spread: 90, origin: { y: 0.4 }, colors: palette });
     setTimeout(
-      () =>
-        confetti({
-          particleCount: 80,
-          spread: 100,
-          angle: 60,
-          origin: { x: 0, y: 0.6 },
-          colors: [primary, gold],
-        }),
+      () => confetti({ particleCount: 100, spread: 110, angle: 60, origin: { x: 0, y: 0.6 }, colors: palette }),
       200
     );
     setTimeout(
-      () =>
-        confetti({
-          particleCount: 80,
-          spread: 100,
-          angle: 120,
-          origin: { x: 1, y: 0.6 },
-          colors: [primary, gold],
-        }),
+      () => confetti({ particleCount: 100, spread: 110, angle: 120, origin: { x: 1, y: 0.6 }, colors: palette }),
       400
+    );
+    setTimeout(
+      () => confetti({ particleCount: 80, spread: 360, startVelocity: 25, origin: { y: 0.5 }, colors: palette, scalar: 0.8 }),
+      700
     );
   };
 
@@ -164,54 +151,71 @@ const TouristPage = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-md mx-auto"
       >
-        <Card className="overflow-hidden border-2 shadow-[var(--shadow-premium)]">
+        <div className="rounded-3xl overflow-hidden border border-border shadow-[var(--shadow-premium)] bg-card">
           <div
-            className="px-6 py-8 text-center text-primary-foreground"
-            style={{ background: "var(--gradient-premium)" }}
+            className="px-6 py-10 text-center text-primary-foreground relative overflow-hidden"
+            style={{ background: "var(--gradient-hero)" }}
           >
+            <div className="absolute inset-0 opacity-20"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 20% 30%, white 1px, transparent 2px), radial-gradient(circle at 80% 70%, white 1px, transparent 2px)",
+                backgroundSize: "40px 40px",
+              }}
+            />
             <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, damping: 12 }}
-              className="text-7xl mb-2"
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 14, delay: 0.1 }}
+              className="relative inline-flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur mb-3 shadow-lg"
             >
-              ✅
+              <span className="text-5xl">✅</span>
             </motion.div>
-            <h2 className="text-2xl font-bold">Оплата прошла!</h2>
-            <p className="text-sm opacity-90 mt-1">📍 {receipt.point_name}</p>
+            <motion.h2
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-3xl font-bold font-display"
+            >
+              Оплата прошла!
+            </motion.h2>
+            <p className="text-sm opacity-90 mt-2 font-medium">📍 {receipt.point_name}</p>
           </div>
 
-          <CardContent className="pt-6 space-y-6">
-            <div className="text-center">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">Итого</p>
-              <p className="text-4xl font-bold text-foreground tabular-nums">
-                {receipt.total_som.toLocaleString("ru-RU")} <span className="text-lg font-medium text-muted-foreground">сом</span>
-              </p>
+          <div className="p-6 space-y-6">
+            <div className="text-center -mt-12 relative">
+              <div className="inline-block bg-card rounded-2xl px-6 py-4 border border-border shadow-[var(--shadow-elevated)]">
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Итого</p>
+                <p className="text-4xl font-bold font-display text-foreground tabular-nums leading-tight">
+                  {receipt.total_som.toLocaleString("ru-RU")}{" "}
+                  <span className="text-lg font-medium text-muted-foreground">сом</span>
+                </p>
+              </div>
             </div>
 
-            <div className="divide-y divide-border text-left text-sm">
+            <div className="divide-y divide-border text-left text-sm rounded-2xl border border-border overflow-hidden">
               {receipt.services.map((s, i) => (
-                <div key={i} className="flex justify-between py-2">
-                  <span>{s.icon} {s.name}</span>
-                  <span className="font-medium tabular-nums">
+                <div key={i} className="flex justify-between py-3 px-4 bg-muted/20">
+                  <span className="font-medium">{s.icon} {s.name}</span>
+                  <span className="font-semibold tabular-nums">
                     {s.price_som.toLocaleString("ru-RU")} сом
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="rounded-lg border p-4">
+            <div className="rounded-2xl border border-border p-5 bg-muted/20">
               <SplitVisualization total={receipt.total_som} />
             </div>
 
-            <p className="text-sm text-center text-muted-foreground">{receipt.message}</p>
+            <p className="text-sm text-center text-muted-foreground italic px-4">{receipt.message}</p>
 
             <Button
               variant="outline"
-              className="w-full"
+              className="w-full h-12 rounded-xl font-semibold"
               onClick={() => {
                 setReceipt(null);
                 setServices(initialServices);
@@ -221,28 +225,35 @@ const TouristPage = () => {
             >
               Новая оплата
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </motion.div>
     );
   }
 
   return (
     <div className="max-w-md mx-auto space-y-6 animate-fade-in">
-      <h1 className="text-3xl font-bold text-center text-foreground">
-        Оплата услуг Rest Point
-      </h1>
+      <div className="text-center space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+            🎒 Платежи туриста
+          </span>
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
+          Оплата услуг <span className="text-gradient-premium">Rest Point</span>
+        </h1>
+      </div>
 
       {/* Выбор Rest Point с TOUROSAT Score */}
-      <Card className="overflow-hidden">
-        <CardContent className="pt-6 space-y-4">
-          <label className="text-sm font-medium text-foreground block">
+      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
+        <div className="p-6 space-y-4">
+          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground block">
             📍 Выберите Rest Point
           </label>
           <select
             value={selectedPoint}
             onChange={(e) => setSelectedPoint(e.target.value)}
-            className="w-full p-3 rounded-md border border-border bg-background text-foreground text-base"
+            className="w-full p-3.5 rounded-xl border border-border bg-background text-foreground text-base font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
           >
             {REST_POINTS.map((p) => (
               <option key={p.name} value={p.name}>
@@ -259,7 +270,7 @@ const TouristPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.3 }}
-                className="flex flex-col items-center gap-3 pt-2"
+                className="flex flex-col items-center gap-4 pt-4"
               >
                 <TourosatScore
                   score={currentPoint.score}
@@ -276,75 +287,84 @@ const TouristPage = () => {
               </motion.div>
             </AnimatePresence>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Услуги */}
-      <Card>
-        <CardContent className="pt-6 space-y-1">
+      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
+        <div className="p-4 space-y-1">
           {services.map((s, i) => (
             <label
               key={i}
-              className="flex items-center justify-between py-3 cursor-pointer hover:bg-accent rounded-md px-2 transition-colors"
+              className="flex items-center justify-between py-3 px-3 cursor-pointer hover:bg-accent rounded-xl transition-colors"
               onClick={() => toggleService(i)}
             >
               <div className="flex items-center gap-3">
                 <Checkbox checked={s.checked} onCheckedChange={() => toggleService(i)} />
-                <span className="text-lg">{s.icon}</span>
-                <span className="text-foreground">{s.name}</span>
+                <span className="text-xl">{s.icon}</span>
+                <span className="text-foreground font-medium">{s.name}</span>
               </div>
-              <span className="font-semibold text-foreground tabular-nums">
-                {s.price_som.toLocaleString("ru-RU")} сом
+              <span className="font-bold text-foreground tabular-nums">
+                {s.price_som.toLocaleString("ru-RU")} <span className="text-xs text-muted-foreground font-medium">сом</span>
               </span>
             </label>
           ))}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Total + live split */}
-      <Card>
-        <CardContent className="pt-6 space-y-4">
+      <div className="rounded-3xl bg-gradient-to-br from-card to-accent/40 border border-border shadow-[var(--shadow-card)] overflow-hidden">
+        <div className="p-6 space-y-5">
           <div className="flex items-baseline justify-between">
-            <span className="text-sm text-muted-foreground">Итого к оплате</span>
+            <span className="text-xs uppercase tracking-wider text-muted-foreground font-bold">
+              Итого к оплате
+            </span>
             <motion.span
               key={total}
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-3xl font-bold text-foreground tabular-nums"
+              className="text-4xl font-bold font-display text-foreground tabular-nums"
             >
-              {total.toLocaleString("ru-RU")} <span className="text-base font-medium text-muted-foreground">сом</span>
+              {total.toLocaleString("ru-RU")}{" "}
+              <span className="text-base font-medium text-muted-foreground">сом</span>
             </motion.span>
           </div>
           {total > 0 && <SplitVisualization total={total} />}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Имя и страна */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">Имя</label>
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Имя</label>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Ваше имя"
+            className="h-11 rounded-xl"
           />
         </div>
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-foreground">Страна</label>
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Страна</label>
           <Input
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             placeholder="Ваша страна"
+            className="h-11 rounded-xl"
           />
         </div>
       </div>
 
       <Button
-        className="w-full h-14 text-lg font-semibold shadow-[var(--shadow-premium)]"
+        className="w-full h-16 text-lg font-bold rounded-2xl shadow-[var(--shadow-premium)] bg-gradient-to-br from-primary to-primary-glow hover:opacity-95 active:scale-[0.99] transition"
         onClick={handlePay}
         disabled={loading || total === 0}
       >
-        {loading ? "Обработка..." : `Оплатить ${total.toLocaleString("ru-RU")} сом`}
+        {loading
+          ? "⏳ Обработка..."
+          : total === 0
+          ? "Выберите услуги"
+          : `Оплатить ${total.toLocaleString("ru-RU")} сом →`}
       </Button>
 
       {error && <p className="text-sm text-destructive text-center">{error}</p>}

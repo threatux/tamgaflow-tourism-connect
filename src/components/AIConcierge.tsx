@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Bot, Send, X } from "lucide-react";
+import { Bot, Send, X, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -68,52 +68,61 @@ const AIConcierge = () => {
 
   return (
     <>
-      {/* Floating button */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 transition-transform flex items-center justify-center"
+          className="fixed bottom-6 right-6 z-50 h-16 w-16 rounded-2xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground shadow-[var(--shadow-premium)] hover:scale-105 active:scale-95 transition-transform flex items-center justify-center animate-pulse-glow group"
           aria-label="Открыть AI Concierge"
         >
-          <Bot className="h-6 w-6" />
+          <Bot className="h-7 w-7" />
+          <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-gold border-2 border-background flex items-center justify-center">
+            <Sparkles className="h-2.5 w-2.5 text-gold-foreground" />
+          </span>
         </button>
       )}
 
-      {/* Chat window */}
       {open && (
-        <div className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[calc(100vh-2rem)] bg-background border border-border rounded-xl shadow-2xl flex flex-col animate-fade-in">
-          <div className="flex items-center justify-between p-3 border-b border-border bg-primary text-primary-foreground rounded-t-xl">
-            <div className="flex items-center gap-2">
-              <Bot className="h-5 w-5" />
+        <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[560px] max-h-[calc(100vh-2rem)] glass rounded-3xl shadow-[var(--shadow-premium)] flex flex-col animate-scale-in overflow-hidden border border-border">
+          <div
+            className="flex items-center justify-between p-4 text-primary-foreground"
+            style={{ background: "var(--gradient-premium)" }}
+          >
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center">
+                <Bot className="h-5 w-5" />
+              </div>
               <div>
-                <p className="font-semibold text-sm leading-tight">AI Concierge</p>
-                <p className="text-[10px] opacity-80 leading-tight">TamgaFlow Assistant</p>
+                <p className="font-bold text-sm leading-tight font-display">AI Concierge</p>
+                <p className="text-[10px] opacity-90 leading-tight uppercase tracking-wider font-medium flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
+                  Online · TamgaFlow
+                </p>
               </div>
             </div>
             <button
               onClick={() => setOpen(false)}
-              className="p-1 hover:bg-primary-foreground/20 rounded"
+              className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
               aria-label="Закрыть"
             >
               <X className="h-4 w-4" />
             </button>
           </div>
 
-          <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-3">
+          <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-3 bg-background/40">
             {messages.map((m, i) => (
               <div
                 key={i}
                 className={cn(
-                  "flex",
+                  "flex animate-fade-in",
                   m.role === "user" ? "justify-end" : "justify-start"
                 )}
               >
                 <div
                   className={cn(
-                    "max-w-[85%] rounded-lg px-3 py-2 text-sm whitespace-pre-wrap",
+                    "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm whitespace-pre-wrap shadow-sm",
                     m.role === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-foreground"
+                      ? "bg-gradient-to-br from-primary to-primary-glow text-primary-foreground rounded-br-sm"
+                      : "bg-card border border-border text-foreground rounded-bl-sm"
                   )}
                 >
                   {m.content}
@@ -122,22 +131,30 @@ const AIConcierge = () => {
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-muted text-muted-foreground rounded-lg px-3 py-2 text-sm">
-                  ⏳ Думаю...
+                <div className="bg-card border border-border rounded-2xl rounded-bl-sm px-3.5 py-2.5 text-sm flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-bounce" style={{ animationDelay: "300ms" }} />
                 </div>
               </div>
             )}
           </div>
 
-          <div className="p-3 border-t border-border flex gap-2">
+          <div className="p-3 border-t border-border bg-card/60 flex gap-2">
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
               placeholder="Спросите AI..."
               disabled={loading}
+              className="rounded-xl border-border/80 bg-background"
             />
-            <Button onClick={send} disabled={loading || !input.trim()} size="icon">
+            <Button
+              onClick={send}
+              disabled={loading || !input.trim()}
+              size="icon"
+              className="rounded-xl bg-gradient-to-br from-primary to-primary-glow shrink-0"
+            >
               <Send className="h-4 w-4" />
             </Button>
           </div>
