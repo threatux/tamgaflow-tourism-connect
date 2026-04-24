@@ -40,50 +40,65 @@ const Index = () => {
   return (
     <div className="space-y-24">
       {/* HERO */}
-      <section className="relative pt-8 md:pt-16 pb-8">
-        {/* Floating ornaments */}
-        <div className="absolute top-10 left-1/4 w-72 h-72 bg-primary/20 rounded-full blur-3xl -z-10 animate-float" />
-        <div className="absolute top-20 right-1/4 w-72 h-72 bg-gold/15 rounded-full blur-3xl -z-10" />
+      <section className="relative pt-12 md:pt-24 pb-12">
+        {/* Premium ambient blobs */}
+        <div className="pointer-events-none absolute -top-10 left-[15%] w-[28rem] h-[28rem] bg-primary/25 rounded-full blur-[120px] -z-10 animate-float" />
+        <div className="pointer-events-none absolute top-32 right-[10%] w-[26rem] h-[26rem] bg-gold/25 rounded-full blur-[120px] -z-10" />
+        <div className="pointer-events-none absolute top-60 left-1/2 -translate-x-1/2 w-[32rem] h-[20rem] bg-primary-glow/20 rounded-full blur-[140px] -z-10" />
+        {/* Subtle dot grid */}
+        <div
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.18]"
+          style={{
+            backgroundImage:
+              "radial-gradient(hsl(var(--primary) / 0.5) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+            maskImage:
+              "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+          }}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center space-y-6 max-w-4xl mx-auto"
+          className="text-center space-y-7 max-w-5xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-card border border-border/60 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-primary/20 shadow-[var(--shadow-card)]">
             <Satellite className="h-3.5 w-3.5 text-primary" />
-            <span className="text-xs font-bold uppercase tracking-wider text-foreground">
+            <span className="text-xs font-bold uppercase tracking-[0.15em] text-foreground">
               Powered by TOUROSAT AI
             </span>
             <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold font-display leading-[1.05] tracking-tight">
+          <h1 className="text-6xl md:text-8xl font-extrabold font-display leading-[0.98] tracking-[-0.035em]">
             Цифровая монетизация{" "}
             <span className="text-gradient-premium">Rest Points</span>{" "}
-            Кыргызстана
+            <span className="block md:inline">Кыргызстана</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-medium">
             TamgaFlow подключает каждое село Иссык-Куля к мировому туризму
             через спутниковую AI-аналитику и прозрачное ценообразование.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-3 pt-4">
+          <div className="flex flex-wrap justify-center gap-4 pt-6">
             <Button
               size="lg"
               onClick={() => navigate("/tourist")}
-              className="h-12 px-7 text-base font-semibold shadow-[var(--shadow-premium)] bg-gradient-to-br from-primary to-primary-glow hover:opacity-95"
+              className="group relative h-14 px-9 text-base font-bold rounded-2xl shadow-[var(--shadow-premium)] bg-gradient-to-br from-primary via-primary to-primary-glow hover:shadow-[var(--shadow-glow)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
             >
-              Попробовать оплату
-              <ArrowRight className="ml-1.5 h-4 w-4" />
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              <span className="relative">Попробовать оплату</span>
+              <ArrowRight className="relative ml-1 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button
               size="lg"
               variant="outline"
               onClick={() => navigate("/map")}
-              className="h-12 px-7 text-base font-semibold rounded-xl border-2 bg-card/60 backdrop-blur"
+              className="h-14 px-9 text-base font-bold rounded-2xl border-2 border-primary/30 bg-card/70 backdrop-blur-md hover:bg-card hover:border-primary/60 hover:-translate-y-0.5 transition-all duration-300 shadow-[var(--shadow-card)]"
             >
               🗺 Открыть карту
             </Button>

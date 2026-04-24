@@ -23,9 +23,9 @@ const getLabel = (score: number) => {
 
 const sizeMap = {
   sm: { box: 72, stroke: 7, font: "text-2xl" },
-  md: { box: 110, stroke: 9, font: "text-4xl" },
-  lg: { box: 168, stroke: 12, font: "text-6xl" },
-  xl: { box: 192, stroke: 14, font: "text-7xl" },
+  md: { box: 120, stroke: 10, font: "text-4xl" },
+  lg: { box: 180, stroke: 14, font: "text-6xl" },
+  xl: { box: 208, stroke: 16, font: "text-7xl" },
 };
 
 export const TourosatScore = ({
@@ -57,15 +57,21 @@ export const TourosatScore = ({
         style={{
           width: box,
           height: box,
-          filter: isLarge ? `drop-shadow(0 0 24px ${color}55)` : undefined,
+          filter: isLarge ? `drop-shadow(0 0 32px ${color}66)` : undefined,
         }}
       >
-        {/* Soft outer glow ring */}
+        {/* Soft outer glow */}
         {isLarge && (
-          <div
-            className="absolute inset-0 rounded-full opacity-40 blur-2xl"
-            style={{ backgroundColor: color }}
-          />
+          <>
+            <div
+              className="absolute inset-0 rounded-full opacity-50 blur-3xl animate-pulse"
+              style={{ backgroundColor: color, animationDuration: "3s" }}
+            />
+            <div
+              className="absolute inset-2 rounded-full opacity-30 blur-xl"
+              style={{ backgroundColor: color }}
+            />
+          </>
         )}
 
         <svg width={box} height={box} className="-rotate-90 relative">
