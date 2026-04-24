@@ -88,35 +88,22 @@ const TouristPage = () => {
   };
 
   const fireConfetti = () => {
-    const primary = "#00A651";
-    const gold = "#F5B700";
-    confetti({
-      particleCount: 120,
-      spread: 80,
-      origin: { y: 0.4 },
-      colors: [primary, gold, "#3B82F6", "#ffffff"],
-    });
+    const primary = "#0891b2";
+    const gold = "#f59e0b";
+    const success = "#10b981";
+    const palette = [primary, gold, success, "#3B82F6", "#ffffff"];
+    confetti({ particleCount: 160, spread: 90, origin: { y: 0.4 }, colors: palette });
     setTimeout(
-      () =>
-        confetti({
-          particleCount: 80,
-          spread: 100,
-          angle: 60,
-          origin: { x: 0, y: 0.6 },
-          colors: [primary, gold],
-        }),
+      () => confetti({ particleCount: 100, spread: 110, angle: 60, origin: { x: 0, y: 0.6 }, colors: palette }),
       200
     );
     setTimeout(
-      () =>
-        confetti({
-          particleCount: 80,
-          spread: 100,
-          angle: 120,
-          origin: { x: 1, y: 0.6 },
-          colors: [primary, gold],
-        }),
+      () => confetti({ particleCount: 100, spread: 110, angle: 120, origin: { x: 1, y: 0.6 }, colors: palette }),
       400
+    );
+    setTimeout(
+      () => confetti({ particleCount: 80, spread: 360, startVelocity: 25, origin: { y: 0.5 }, colors: palette, scalar: 0.8 }),
+      700
     );
   };
 
@@ -229,14 +216,21 @@ const TouristPage = () => {
 
   return (
     <div className="max-w-md mx-auto space-y-6 animate-fade-in">
-      <h1 className="text-3xl font-bold text-center text-foreground">
-        Оплата услуг Rest Point
-      </h1>
+      <div className="text-center space-y-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+            🎒 Платежи туриста
+          </span>
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
+          Оплата услуг <span className="text-gradient-premium">Rest Point</span>
+        </h1>
+      </div>
 
       {/* Выбор Rest Point с TOUROSAT Score */}
-      <Card className="overflow-hidden">
-        <CardContent className="pt-6 space-y-4">
-          <label className="text-sm font-medium text-foreground block">
+      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
+        <div className="p-6 space-y-4">
+          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground block">
             📍 Выберите Rest Point
           </label>
           <select
