@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { WeatherBadge } from "@/components/WeatherBadge";
+import { TourosatScore } from "@/components/TourosatScore";
+import { SplitVisualization } from "@/components/SplitVisualization";
+import { motion } from "framer-motion";
 
 const MOCK_CARD = {
   card: {
@@ -64,11 +66,6 @@ const OwnerPage = () => {
     }
   };
 
-  const getScoreColor = (score: number) => {
-    if (score >= 70) return "bg-green-100 text-green-800";
-    if (score >= 50) return "bg-yellow-100 text-yellow-800";
-    return "bg-red-100 text-red-800";
-  };
 
   return (
     <div className="max-w-2xl mx-auto space-y-8 animate-fade-in">
@@ -116,63 +113,73 @@ const OwnerPage = () => {
       </Card>
 
       {result && (
-        <Card className="animate-fade-in">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-2xl">{result.card.name}</CardTitle>
-              <Badge className={getScoreColor(result.card.tourism_score)}>
-                Score: {result.card.tourism_score}/100
-              </Badge>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="overflow-hidden border-2 shadow-[var(--shadow-premium)]">
+            {/* Hero score */}
+            <div className="bg-gradient-to-br from-accent to-background px-6 py-8 flex flex-col items-center text-center gap-4">
+              <h2 className="text-3xl font-bold text-foreground">{result.card.name}</h2>
+              <TourosatScore
+                score={result.card.tourism_score}
+                confidence={parseFloat(result.card.ai_confidence)}
+                size="xl"
+              />
             </div>
-            <p className="text-sm text-muted-foreground">
-              AI Confidence: {result.card.ai_confidence}
-            </p>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="divide-y divide-border">
-              {result.services.map((s, i) => (
-                <div key={i} className="flex items-center justify-between py-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{s.icon}</span>
-                    <span className="font-medium text-foreground">{s.name}</span>
-                    <span className="text-xs text-muted-foreground">{s.unit}</span>
+
+            <CardContent className="space-y-6 pt-6">
+              <div className="divide-y divide-border">
+                {result.services.map((s, i) => (
+                  <div key={i} className="flex items-center justify-between py-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{s.icon}</span>
+                      <span className="font-medium text-foreground">{s.name}</span>
+                      <span className="text-xs text-muted-foreground">{s.unit}</span>
+                    </div>
+                    {s.price_som === 0 ? (
+                      <span className="text-sm font-medium text-primary">Бесплатно</span>
+                    ) : (
+                      <span className="font-semibold text-foreground tabular-nums">
+                        {s.price_som.toLocaleString("ru-RU")} сом
+                      </span>
+                    )}
                   </div>
-                  {s.price_som === 0 ? (
-                    <span className="text-sm font-medium text-green-600">Бесплатно</span>
-                  ) : (
-                    <span className="font-semibold text-foreground">{s.price_som} сом</span>
-                  )}
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            <div className="space-y-1">
-              <WeatherBadge lat={lat} lon={lon} variant="card" />
-              <p className="text-xs text-muted-foreground text-center">
-                Прогноз погоды учитывается в AI-ценообразовании TOUROSAT
-              </p>
-            </div>
+              <div className="space-y-1">
+                <WeatherBadge lat={lat} lon={lon} variant="card" />
+                <p className="text-xs text-muted-foreground text-center">
+                  Прогноз погоды учитывается в AI-ценообразовании TOUROSAT
+                </p>
+              </div>
 
-            <p className="text-sm text-muted-foreground italic">{result.pricing_note}</p>
+              <p className="text-sm text-muted-foreground italic">{result.pricing_note}</p>
 
-            <div className="bg-muted rounded-lg p-4 text-center space-y-1">
-              <p className="text-sm text-muted-foreground">QR код для туристов</p>
-              <p className="font-mono text-xl font-bold text-foreground">
-                {result.qr_code.id}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                Покажите этот код туристам для оплаты
-              </p>
-            </div>
+              <div className="bg-muted rounded-lg p-4 text-center space-y-1">
+                <p className="text-sm text-muted-foreground">QR код для туристов</p>
+                <p className="font-mono text-xl font-bold text-foreground">
+                  {result.qr_code.id}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Покажите этот код туристам для оплаты
+                </p>
+              </div>
 
-            <div className="bg-accent rounded-lg p-4 text-center">
-              <p className="text-sm text-muted-foreground">📈 Прогноз дохода за сезон</p>
-              <p className="text-2xl font-bold text-foreground">
-                {result.revenue_forecast.season_revenue_som}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+              <div
+                className="rounded-lg p-5 text-center text-primary-foreground"
+                style={{ background: "var(--gradient-premium)" }}
+              >
+                <p className="text-sm opacity-90">📈 Прогноз дохода за сезон</p>
+                <p className="text-3xl font-bold tracking-tight">
+                  {result.revenue_forecast.season_revenue_som}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
     </div>
   );
