@@ -118,33 +118,59 @@ const DashboardPage = () => {
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {statCards.map(({ key, label, icon: Icon, accent }, i) => (
-          <motion.div
-            key={key}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.08 }}
-            className="rounded-3xl p-5 bg-card border border-border shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-shadow"
-          >
-            <div className="flex items-start justify-between mb-4">
+        {statCards.map(({ key, label, icon: Icon, accent }, i) => {
+          const accentColor =
+            accent === "gold"
+              ? "hsl(var(--gold))"
+              : accent === "success"
+              ? "hsl(var(--success))"
+              : "hsl(var(--primary))";
+          return (
+            <motion.div
+              key={key}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
+              whileHover={{ y: -3 }}
+              className="group relative rounded-3xl p-6 bg-card border border-border shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-all overflow-hidden"
+            >
+              {/* accent corner glow */}
               <div
-                className={`h-10 w-10 rounded-xl flex items-center justify-center ${
-                  accent === "gold"
-                    ? "bg-gold/15 text-[hsl(var(--gold))]"
-                    : accent === "success"
-                    ? "bg-success/15 text-[hsl(var(--success))]"
-                    : "bg-primary/15 text-primary"
-                }`}
-              >
-                <Icon className="h-5 w-5" />
+                className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"
+                style={{ backgroundColor: accentColor }}
+              />
+              <div className="relative">
+                <div className="flex items-start justify-between mb-5">
+                  <div
+                    className="h-11 w-11 rounded-2xl flex items-center justify-center shadow-sm"
+                    style={{
+                      background: `linear-gradient(135deg, ${accentColor}33, ${accentColor}11)`,
+                      border: `1px solid ${accentColor}40`,
+                      color: accentColor,
+                    }}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                    style={{
+                      backgroundColor: `${accentColor}15`,
+                      color: accentColor,
+                    }}
+                  >
+                    Live
+                  </span>
+                </div>
+                <p className="text-3xl md:text-4xl font-extrabold font-display text-foreground tabular-nums leading-none tracking-tight">
+                  {String(data.summary?.[key] ?? "—")}
+                </p>
+                <p className="text-xs text-muted-foreground mt-2.5 font-semibold uppercase tracking-wider">
+                  {label}
+                </p>
               </div>
-            </div>
-            <p className="text-2xl md:text-3xl font-bold font-display text-foreground tabular-nums leading-none">
-              {String(data.summary?.[key] ?? "—")}
-            </p>
-            <p className="text-xs text-muted-foreground mt-2 font-medium">{label}</p>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* National context */}
@@ -190,31 +216,47 @@ const DashboardPage = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.04 }}
-                  className="border-b border-border last:border-0 hover:bg-muted/40 transition-colors"
+                  className="border-b border-border/60 last:border-0 hover:bg-primary/5 transition-colors group"
                 >
-                  <td className="py-3.5 px-6 text-lg">{p.status}</td>
-                  <td className="py-3.5 px-4 font-semibold text-foreground">{p.name}</td>
-                  <td className="py-3.5 px-4">
+                  <td className="py-4 px-6 text-lg">
+                    <span className="inline-flex items-center justify-center h-8 w-8 rounded-xl bg-muted/60 group-hover:bg-card group-hover:shadow-sm transition-all">
+                      {p.status}
+                    </span>
+                  </td>
+                  <td className="py-4 px-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
-                        <div
+                      <span className="text-[11px] font-bold text-muted-foreground tabular-nums w-5">
+                        {i + 1}
+                      </span>
+                      <span className="font-bold text-foreground">{p.name}</span>
+                    </div>
+                  </td>
+                  <td className="py-4 px-4">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-20 h-2 rounded-full bg-muted overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${p.tourism_score}%` }}
+                          transition={{ duration: 0.8, delay: 0.1 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
                           className="h-full rounded-full"
                           style={{
-                            width: `${p.tourism_score}%`,
-                            backgroundColor: scoreColor(p.tourism_score),
+                            background: `linear-gradient(90deg, ${scoreColor(p.tourism_score)}, ${scoreColor(p.tourism_score)}cc)`,
+                            boxShadow: `0 0 8px ${scoreColor(p.tourism_score)}55`,
                           }}
                         />
                       </div>
                       <span
-                        className="font-bold tabular-nums text-sm"
+                        className="font-extrabold tabular-nums text-base font-display"
                         style={{ color: scoreColor(p.tourism_score) }}
                       >
                         {p.tourism_score}
                       </span>
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 tabular-nums text-foreground">{p.transactions_today}</td>
-                  <td className="py-3.5 px-6 text-right font-semibold text-foreground tabular-nums">
+                  <td className="py-4 px-4 tabular-nums font-semibold text-foreground">
+                    {p.transactions_today}
+                  </td>
+                  <td className="py-4 px-6 text-right font-bold text-foreground tabular-nums">
                     {typeof p.revenue_som === "number"
                       ? p.revenue_som.toLocaleString("ru-RU") + " сом"
                       : "—"}
@@ -250,23 +292,31 @@ const DashboardPage = () => {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
-                className="flex items-center justify-between p-4 hover:bg-muted/40 transition-colors"
+                className="flex items-center justify-between p-4 hover:bg-primary/5 transition-colors group"
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <span className="text-xs text-muted-foreground w-12 font-mono shrink-0">{item.time}</span>
-                  <div className="h-9 w-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-sm font-bold shrink-0">
+                  <span className="text-xs text-muted-foreground w-12 font-mono shrink-0 tabular-nums">
+                    {item.time}
+                  </span>
+                  <div className="relative h-10 w-10 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 text-primary flex items-center justify-center text-sm font-bold shrink-0 border border-primary/20 shadow-sm">
                     📍
+                    <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-success border-2 border-background animate-pulse" />
                   </div>
                   <div className="min-w-0">
-                    <p className="font-semibold text-foreground truncate">{item.point}</p>
+                    <p className="font-bold text-foreground truncate">{item.point}</p>
                     <p className="text-xs text-muted-foreground truncate">
                       {item.tourist} · {item.country}
                     </p>
                   </div>
                 </div>
-                <span className="font-bold text-[hsl(var(--success))] tabular-nums shrink-0">
-                  +{item.amount}
-                </span>
+                <div className="flex flex-col items-end shrink-0">
+                  <span className="font-extrabold text-[hsl(var(--success))] tabular-nums text-base font-display">
+                    +{item.amount}
+                  </span>
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                    Split 88/7/5
+                  </span>
+                </div>
               </motion.div>
             ))
           )}
