@@ -118,33 +118,59 @@ const DashboardPage = () => {
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {statCards.map(({ key, label, icon: Icon, accent }, i) => (
-          <motion.div
-            key={key}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.08 }}
-            className="rounded-3xl p-5 bg-card border border-border shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-shadow"
-          >
-            <div className="flex items-start justify-between mb-4">
+        {statCards.map(({ key, label, icon: Icon, accent }, i) => {
+          const accentColor =
+            accent === "gold"
+              ? "hsl(var(--gold))"
+              : accent === "success"
+              ? "hsl(var(--success))"
+              : "hsl(var(--primary))";
+          return (
+            <motion.div
+              key={key}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
+              whileHover={{ y: -3 }}
+              className="group relative rounded-3xl p-6 bg-card border border-border shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-all overflow-hidden"
+            >
+              {/* accent corner glow */}
               <div
-                className={`h-10 w-10 rounded-xl flex items-center justify-center ${
-                  accent === "gold"
-                    ? "bg-gold/15 text-[hsl(var(--gold))]"
-                    : accent === "success"
-                    ? "bg-success/15 text-[hsl(var(--success))]"
-                    : "bg-primary/15 text-primary"
-                }`}
-              >
-                <Icon className="h-5 w-5" />
+                className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"
+                style={{ backgroundColor: accentColor }}
+              />
+              <div className="relative">
+                <div className="flex items-start justify-between mb-5">
+                  <div
+                    className="h-11 w-11 rounded-2xl flex items-center justify-center shadow-sm"
+                    style={{
+                      background: `linear-gradient(135deg, ${accentColor}33, ${accentColor}11)`,
+                      border: `1px solid ${accentColor}40`,
+                      color: accentColor,
+                    }}
+                  >
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                    style={{
+                      backgroundColor: `${accentColor}15`,
+                      color: accentColor,
+                    }}
+                  >
+                    Live
+                  </span>
+                </div>
+                <p className="text-3xl md:text-4xl font-extrabold font-display text-foreground tabular-nums leading-none tracking-tight">
+                  {String(data.summary?.[key] ?? "—")}
+                </p>
+                <p className="text-xs text-muted-foreground mt-2.5 font-semibold uppercase tracking-wider">
+                  {label}
+                </p>
               </div>
-            </div>
-            <p className="text-2xl md:text-3xl font-bold font-display text-foreground tabular-nums leading-none">
-              {String(data.summary?.[key] ?? "—")}
-            </p>
-            <p className="text-xs text-muted-foreground mt-2 font-medium">{label}</p>
-          </motion.div>
-        ))}
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* National context */}
