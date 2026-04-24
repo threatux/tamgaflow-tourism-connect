@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent } from "@/components/ui/card";
+
 import { WeatherBadge } from "@/components/WeatherBadge";
 import { TourosatScore } from "@/components/TourosatScore";
 import { SplitVisualization } from "@/components/SplitVisualization";

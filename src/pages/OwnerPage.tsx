@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+
 import { WeatherBadge } from "@/components/WeatherBadge";
 import { TourosatScore } from "@/components/TourosatScore";
 import { SplitVisualization } from "@/components/SplitVisualization";
