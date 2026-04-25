@@ -154,150 +154,172 @@ const MapPage = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-up max-w-7xl mx-auto">
+    <div className="space-y-5 sm:space-y-6 animate-fade-up max-w-7xl mx-auto">
       {/* Header */}
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent border border-primary/20">
-          <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary-dark">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent border border-primary/20 max-w-full">
+          <span className="size-1.5 rounded-full bg-primary animate-pulse shrink-0" />
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] sm:tracking-[0.18em] text-primary-dark truncate">
             🛰 Live карта · Кыргызстан
           </span>
         </div>
-        <h1 className="text-4xl md:text-6xl font-extrabold font-display tracking-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold font-display tracking-tight">
           Rest Points <span className="text-gradient-teal">по всей стране</span>
         </h1>
-        <p className="text-muted-foreground text-base max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto px-2">
           {filtered.length} точек · цвет маркера = TOUROSAT Score · кликните для деталей
         </p>
       </div>
 
       {/* Map shell */}
-      <div className="relative rounded-[2rem] overflow-hidden border border-border shadow-[var(--shadow-elevated)] h-[78vh] bg-card">
+      <div className="relative rounded-2xl sm:rounded-[2rem] overflow-hidden border border-border shadow-[var(--shadow-elevated)] h-[70vh] sm:h-[78vh] min-h-[500px] bg-card">
         {/* Top search bar */}
-        <div className="absolute top-4 left-4 right-4 z-[1000] flex gap-3 items-center">
-          <div className="flex-1 max-w-xl glass-strong rounded-2xl px-4 h-12 flex items-center gap-3 shadow-[var(--shadow-card)]">
+        <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 z-[1000] flex gap-2 sm:gap-3 items-center">
+          <div className="flex-1 min-w-0 glass-strong rounded-xl sm:rounded-2xl px-3 sm:px-4 h-11 sm:h-12 flex items-center gap-2 sm:gap-3 shadow-[var(--shadow-card)]">
             <Search className="size-4 text-muted-foreground shrink-0" />
             <Input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Куда вы хотите поехать?"
-              className="border-0 bg-transparent h-full px-0 focus-visible:ring-0 text-sm font-medium placeholder:text-muted-foreground"
+              placeholder="Куда поехать?"
+              className="border-0 bg-transparent h-full px-0 focus-visible:ring-0 text-sm font-medium placeholder:text-muted-foreground min-w-0"
             />
           </div>
           <button
             onClick={() => setFiltersOpen((v) => !v)}
-            className="glass-strong rounded-2xl h-12 px-4 inline-flex items-center gap-2 text-sm font-semibold text-foreground shadow-[var(--shadow-card)] transition-premium hover:bg-card"
+            className="glass-strong rounded-xl sm:rounded-2xl h-11 sm:h-12 px-3 sm:px-4 inline-flex items-center gap-2 text-sm font-semibold text-foreground shadow-[var(--shadow-card)] transition-premium hover:bg-card shrink-0"
+            aria-label="Фильтры"
           >
             <SlidersHorizontal className="size-4" />
-            Фильтры
+            <span className="hidden sm:inline">Фильтры</span>
           </button>
         </div>
 
-        {/* Left filter panel */}
+        {/* Filter panel — drawer on mobile, side panel on desktop */}
         {filtersOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-20 left-4 z-[1000] w-72 max-h-[calc(78vh-6rem)] overflow-y-auto glass-strong rounded-2xl p-5 space-y-5 shadow-[var(--shadow-elevated)]"
-          >
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
-                Категория
-              </p>
-              <div className="space-y-2">
-                {CATEGORIES.map((c) => (
-                  <label
-                    key={c.id}
-                    className="flex items-center gap-2.5 cursor-pointer text-sm font-medium text-foreground"
-                  >
-                    <Checkbox
-                      checked={activeCategories.includes(c.id)}
-                      onCheckedChange={() => toggle(activeCategories, c.id, setActiveCategories)}
-                    />
-                    {c.label}
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
-                Регион
-              </p>
-              <div className="grid grid-cols-2 gap-1.5">
-                {REGIONS.map((r) => {
-                  const active = activeRegions.includes(r);
-                  return (
-                    <button
-                      key={r}
-                      onClick={() => toggle(activeRegions, r, setActiveRegions)}
-                      className={`text-[11px] font-semibold py-1.5 px-2 rounded-lg border transition-premium ${
-                        active
-                          ? "bg-primary text-primary-foreground border-primary"
-                          : "bg-card border-border text-foreground hover:border-primary/40"
-                      }`}
-                    >
-                      {r}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                  TOUROSAT Score
-                </p>
-                <span className="text-[11px] font-bold tabular-nums text-foreground">
-                  {scoreRange[0]}–{scoreRange[1]}
-                </span>
-              </div>
-              <Slider
-                min={35}
-                max={100}
-                step={1}
-                value={scoreRange}
-                onValueChange={(v) => setScoreRange([v[0], v[1]] as [number, number])}
-              />
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
-                  Цена / ночь, сом
-                </p>
-                <span className="text-[11px] font-bold tabular-nums text-foreground">
-                  {priceRange[0].toLocaleString("ru-RU")}–{priceRange[1].toLocaleString("ru-RU")}
-                </span>
-              </div>
-              <Slider
-                min={1500}
-                max={7000}
-                step={100}
-                value={priceRange}
-                onValueChange={(v) => setPriceRange([v[0], v[1]] as [number, number])}
-              />
-            </div>
-
+          <>
+            {/* Mobile backdrop */}
             <button
-              onClick={() => {
-                setQuery("");
-                setScoreRange([35, 100]);
-                setPriceRange([1500, 7000]);
-                setActiveRegions([]);
-                setActiveCategories([]);
-              }}
-              className="w-full text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground hover:text-primary transition-colors py-1"
+              onClick={() => setFiltersOpen(false)}
+              aria-label="Закрыть фильтры"
+              className="md:hidden absolute inset-0 z-[999] bg-foreground/30 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute z-[1000] bg-card md:glass-strong shadow-[var(--shadow-elevated)] overflow-y-auto
+                inset-x-3 bottom-3 top-20 rounded-2xl p-4 space-y-4
+                md:inset-x-auto md:bottom-auto md:top-20 md:left-4 md:w-72 md:max-h-[calc(78vh-6rem)] md:rounded-2xl md:p-5 md:space-y-5"
             >
-              Сбросить фильтры
-            </button>
-          </motion.div>
+              <div className="md:hidden flex items-center justify-between pb-2 border-b border-border">
+                <p className="text-sm font-bold text-foreground">Фильтры</p>
+                <button
+                  onClick={() => setFiltersOpen(false)}
+                  className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center text-foreground"
+                  aria-label="Закрыть"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
+                  Категория
+                </p>
+                <div className="space-y-2">
+                  {CATEGORIES.map((c) => (
+                    <label
+                      key={c.id}
+                      className="flex items-center gap-2.5 cursor-pointer text-sm font-medium text-foreground py-1"
+                    >
+                      <Checkbox
+                        checked={activeCategories.includes(c.id)}
+                        onCheckedChange={() => toggle(activeCategories, c.id, setActiveCategories)}
+                      />
+                      {c.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-2">
+                  Регион
+                </p>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {REGIONS.map((r) => {
+                    const active = activeRegions.includes(r);
+                    return (
+                      <button
+                        key={r}
+                        onClick={() => toggle(activeRegions, r, setActiveRegions)}
+                        className={`text-[11px] font-semibold py-2 px-2 rounded-lg border transition-premium ${
+                          active
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-card border-border text-foreground hover:border-primary/40"
+                        }`}
+                      >
+                        {r}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                    TOUROSAT Score
+                  </p>
+                  <span className="text-[11px] font-bold tabular-nums text-foreground">
+                    {scoreRange[0]}–{scoreRange[1]}
+                  </span>
+                </div>
+                <Slider
+                  min={35}
+                  max={100}
+                  step={1}
+                  value={scoreRange}
+                  onValueChange={(v) => setScoreRange([v[0], v[1]] as [number, number])}
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+                    Цена / ночь, сом
+                  </p>
+                  <span className="text-[11px] font-bold tabular-nums text-foreground">
+                    {priceRange[0].toLocaleString("ru-RU")}–{priceRange[1].toLocaleString("ru-RU")}
+                  </span>
+                </div>
+                <Slider
+                  min={1500}
+                  max={7000}
+                  step={100}
+                  value={priceRange}
+                  onValueChange={(v) => setPriceRange([v[0], v[1]] as [number, number])}
+                />
+              </div>
+
+              <button
+                onClick={() => {
+                  setQuery("");
+                  setScoreRange([35, 100]);
+                  setPriceRange([1500, 7000]);
+                  setActiveRegions([]);
+                  setActiveCategories([]);
+                }}
+                className="w-full text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground hover:text-primary transition-colors py-2"
+              >
+                Сбросить фильтры
+              </button>
+            </motion.div>
+          </>
         )}
 
-        {/* Bottom-right legend */}
-        <div className="absolute bottom-4 right-4 z-[1000] glass-strong rounded-2xl p-3.5 shadow-[var(--shadow-card)] space-y-1.5 min-w-[180px]">
+        {/* Bottom-right legend — hidden on small phones to free space */}
+        <div className="hidden sm:block absolute bottom-4 right-4 z-[1000] glass-strong rounded-2xl p-3.5 shadow-[var(--shadow-card)] space-y-1.5 min-w-[180px]">
           <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground mb-1">
             TOUROSAT Score
           </p>
@@ -308,6 +330,20 @@ const MapPage = () => {
                 style={{ backgroundColor: l.color, boxShadow: `0 0 0 2px ${l.color}33` }}
               />
               <span className="flex-1">{l.label}</span>
+              <span className="text-muted-foreground tabular-nums">{l.range}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Compact mobile legend */}
+        <div className="sm:hidden absolute bottom-3 left-3 right-3 z-[1000] glass-strong rounded-xl px-3 py-2 shadow-[var(--shadow-card)] flex items-center justify-between gap-2 overflow-x-auto">
+          {LEGEND.map((l) => (
+            <div key={l.label} className="flex items-center gap-1.5 text-[10px] font-semibold text-foreground shrink-0">
+              <span
+                className="size-2 rounded-full shrink-0"
+                style={{ backgroundColor: l.color, boxShadow: `0 0 0 2px ${l.color}33` }}
+              />
+              <span>{l.label}</span>
               <span className="text-muted-foreground tabular-nums">{l.range}</span>
             </div>
           ))}
