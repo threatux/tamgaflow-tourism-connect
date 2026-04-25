@@ -389,7 +389,7 @@ const MapPage = () => {
                 }
               }}
             >
-              <Popup maxWidth={400} minWidth={360} closeButton autoPan>
+              <Popup maxWidth={360} minWidth={260} closeButton autoPan>
                 <MapPopupCard
                   point={p}
                   onPay={() => navigate(`/tourist?point=${encodeURIComponent(p.name)}`)}
