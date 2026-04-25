@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Activity, Banknote, MapPin, TrendingUp } from "lucide-react";
+import { Activity, Banknote, MapPin, TrendingUp, Sparkles } from "lucide-react";
 
 const MOCK_DASHBOARD = {
   summary: {
     total_transactions: 47,
     total_revenue_display: "186,400 сом",
-    fund_share_display: "9,320 сом",
+    fund_share_display: "22,368 сом",
     rest_points_active: 12,
   },
   top_points: [
@@ -66,10 +66,10 @@ const statCards = [
 ];
 
 const scoreColor = (score: number) => {
-  if (score >= 70) return "hsl(var(--score-excellent))";
-  if (score >= 50) return "hsl(var(--score-good))";
-  if (score >= 40) return "hsl(var(--score-medium))";
-  return "hsl(var(--score-low))";
+  if (score >= 70) return "hsl(160 84% 39%)";
+  if (score >= 50) return "hsl(190 91% 36%)";
+  if (score >= 40) return "hsl(38 92% 50%)";
+  return "hsl(0 84% 60%)";
 };
 
 const DashboardPage = () => {
@@ -99,19 +99,19 @@ const DashboardPage = () => {
   const aiRecs = data.ai_recommendations || [];
 
   return (
-    <div className="space-y-10 animate-fade-in max-w-6xl mx-auto">
+    <div className="space-y-12 animate-fade-up max-w-7xl mx-auto">
       {/* Hero header */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+      <div className="text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent border border-primary/20">
           <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
-          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary-dark">
             Live Dashboard {error && `· ${error}`}
           </span>
         </div>
-        <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight">
-          Дашборд <span className="text-gradient-premium">Фонда</span> туризма КР
+        <h1 className="text-4xl md:text-6xl font-extrabold font-display tracking-tight">
+          Дашборд <span className="text-gradient-teal">Фонда</span> туризма КР
         </h1>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-base">
           Powered by TOUROSAT AI · Sentinel-2 + SRTM + MODIS
         </p>
       </div>
@@ -121,10 +121,10 @@ const DashboardPage = () => {
         {statCards.map(({ key, label, icon: Icon, accent }, i) => {
           const accentColor =
             accent === "gold"
-              ? "hsl(var(--gold))"
+              ? "hsl(38 92% 50%)"
               : accent === "success"
-              ? "hsl(var(--success))"
-              : "hsl(var(--primary))";
+              ? "hsl(160 84% 39%)"
+              : "hsl(190 91% 36%)";
           return (
             <motion.div
               key={key}
@@ -132,9 +132,8 @@ const DashboardPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
               whileHover={{ y: -3 }}
-              className="group relative rounded-3xl p-6 bg-card border border-border shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-all overflow-hidden"
+              className="group relative rounded-3xl p-6 bg-card border border-border shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-premium overflow-hidden"
             >
-              {/* accent corner glow */}
               <div
                 className="absolute -top-10 -right-10 w-32 h-32 rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity"
                 style={{ backgroundColor: accentColor }}
@@ -144,7 +143,7 @@ const DashboardPage = () => {
                   <div
                     className="h-11 w-11 rounded-2xl flex items-center justify-center shadow-sm"
                     style={{
-                      background: `linear-gradient(135deg, ${accentColor}33, ${accentColor}11)`,
+                      background: `linear-gradient(135deg, ${accentColor}26, ${accentColor}0d)`,
                       border: `1px solid ${accentColor}40`,
                       color: accentColor,
                     }}
@@ -152,7 +151,7 @@ const DashboardPage = () => {
                     <Icon className="h-5 w-5" />
                   </div>
                   <span
-                    className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                    className="text-[10px] font-bold uppercase tracking-[0.15em] px-2 py-0.5 rounded-full"
                     style={{
                       backgroundColor: `${accentColor}15`,
                       color: accentColor,
@@ -164,7 +163,7 @@ const DashboardPage = () => {
                 <p className="text-3xl md:text-4xl font-extrabold font-display text-foreground tabular-nums leading-none tracking-tight">
                   {String(data.summary?.[key] ?? "—")}
                 </p>
-                <p className="text-xs text-muted-foreground mt-2.5 font-semibold uppercase tracking-wider">
+                <p className="text-[11px] text-muted-foreground mt-2.5 font-bold uppercase tracking-[0.15em]">
                   {label}
                 </p>
               </div>
@@ -180,13 +179,13 @@ const DashboardPage = () => {
         className="rounded-3xl p-7 bg-gradient-to-br from-primary/5 via-card to-gold/5 border border-border shadow-[var(--shadow-card)]"
       >
         <div className="flex items-start gap-4">
-          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-2xl shrink-0 shadow-md">
+          <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-2xl shrink-0 shadow-md">
             🏔
           </div>
           <div className="space-y-1.5">
-            <h3 className="font-bold text-foreground font-display text-lg">Национальный контекст</h3>
-            <p className="text-sm text-muted-foreground">Туризм КР 2025: <span className="font-semibold text-foreground">$1.098 млрд</span> (+8.1%)</p>
-            <p className="text-sm text-muted-foreground">Проблема: <span className="font-semibold text-foreground">95% дохода в 5 местах</span></p>
+            <h3 className="font-extrabold text-foreground font-display text-lg">Национальный контекст</h3>
+            <p className="text-sm text-muted-foreground">Туризм КР 2025: <span className="font-bold text-foreground">$1.098 млрд</span> (+8.1%)</p>
+            <p className="text-sm text-muted-foreground">Проблема: <span className="font-bold text-foreground">95% дохода в 5 местах</span></p>
             <p className="text-sm text-muted-foreground">TamgaFlow: цифровая монетизация каждого Rest Point</p>
           </div>
         </div>
@@ -194,19 +193,19 @@ const DashboardPage = () => {
 
       {/* Top Points Table */}
       <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
-        <div className="p-6 border-b border-border">
-          <h2 className="text-xl font-bold font-display text-foreground">Топ Rest Points</h2>
+        <div className="p-7 border-b border-border">
+          <h2 className="text-2xl font-extrabold font-display text-foreground tracking-tight">Топ Rest Points</h2>
           <p className="text-sm text-muted-foreground mt-1">Ранжирование по TOUROSAT Score</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border bg-muted/30 text-left text-xs uppercase tracking-wider text-muted-foreground">
-                <th className="py-3 px-6 font-semibold">Статус</th>
-                <th className="py-3 px-4 font-semibold">Название</th>
-                <th className="py-3 px-4 font-semibold">Score</th>
-                <th className="py-3 px-4 font-semibold">Транзакций</th>
-                <th className="py-3 px-6 font-semibold text-right">Доход</th>
+              <tr className="border-b border-border bg-muted/40 text-left text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
+                <th className="py-3 px-6 font-bold">Статус</th>
+                <th className="py-3 px-4 font-bold">Название</th>
+                <th className="py-3 px-4 font-bold">Score</th>
+                <th className="py-3 px-4 font-bold">Транзакций</th>
+                <th className="py-3 px-6 font-bold text-right">Доход</th>
               </tr>
             </thead>
             <tbody>
@@ -216,7 +215,7 @@ const DashboardPage = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.04 }}
-                  className="border-b border-border/60 last:border-0 hover:bg-primary/5 transition-colors group"
+                  className="border-b border-border/60 last:border-0 hover:bg-accent/40 transition-colors group"
                 >
                   <td className="py-4 px-6 text-lg">
                     <span className="inline-flex items-center justify-center h-8 w-8 rounded-xl bg-muted/60 group-hover:bg-card group-hover:shadow-sm transition-all">
@@ -233,11 +232,11 @@ const DashboardPage = () => {
                   </td>
                   <td className="py-4 px-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-20 h-2 rounded-full bg-muted overflow-hidden">
+                      <div className="w-24 h-2 rounded-full bg-muted overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${p.tourism_score}%` }}
-                          transition={{ duration: 0.8, delay: 0.1 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                          transition={{ duration: 0.9, delay: 0.1 + i * 0.04, ease: [0.22, 1, 0.36, 1] }}
                           className="h-full rounded-full"
                           style={{
                             background: `linear-gradient(90deg, ${scoreColor(p.tourism_score)}, ${scoreColor(p.tourism_score)}cc)`,
@@ -270,14 +269,14 @@ const DashboardPage = () => {
 
       {/* Live Feed */}
       <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
-        <div className="p-6 border-b border-border flex items-center justify-between">
+        <div className="p-7 border-b border-border flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold font-display text-foreground">Живой поток</h2>
+            <h2 className="text-2xl font-extrabold font-display text-foreground tracking-tight">Живой поток</h2>
             <p className="text-sm text-muted-foreground mt-1">{liveFeed.length} последних транзакций</p>
           </div>
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-success/10 border border-success/30">
-            <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--success))] animate-pulse" />
-            <span className="text-xs font-bold text-[hsl(var(--success))] uppercase tracking-wider">Live</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
+            <span className="text-xs font-bold text-success-deep uppercase tracking-wider">Live</span>
           </div>
         </div>
         <div className="divide-y divide-border">
@@ -292,13 +291,13 @@ const DashboardPage = () => {
                 initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.04 }}
-                className="flex items-center justify-between p-4 hover:bg-primary/5 transition-colors group"
+                className="flex items-center justify-between p-5 hover:bg-accent/40 transition-colors group"
               >
                 <div className="flex items-center gap-4 min-w-0">
                   <span className="text-xs text-muted-foreground w-12 font-mono shrink-0 tabular-nums">
                     {item.time}
                   </span>
-                  <div className="relative h-10 w-10 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 text-primary flex items-center justify-center text-sm font-bold shrink-0 border border-primary/20 shadow-sm">
+                  <div className="relative h-10 w-10 rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 text-primary flex items-center justify-center text-sm font-bold shrink-0 border border-primary/20 shadow-sm">
                     📍
                     <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-success border-2 border-background animate-pulse" />
                   </div>
@@ -310,10 +309,10 @@ const DashboardPage = () => {
                   </div>
                 </div>
                 <div className="flex flex-col items-end shrink-0">
-                  <span className="font-extrabold text-[hsl(var(--success))] tabular-nums text-base font-display">
+                  <span className="font-extrabold text-success-deep tabular-nums text-base font-display">
                     +{item.amount}
                   </span>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                  <span className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-bold">
                     Split 88 / 12
                   </span>
                 </div>
@@ -324,12 +323,12 @@ const DashboardPage = () => {
       </div>
 
       {/* AI Recommendations */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center text-sm">
-            🤖
+      <div className="space-y-5">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-sm shadow-md">
+            <Sparkles className="h-5 w-5 text-white" />
           </div>
-          <h2 className="text-xl font-bold font-display text-foreground">AI Рекомендации</h2>
+          <h2 className="text-2xl font-extrabold font-display text-foreground tracking-tight">AI Рекомендации</h2>
         </div>
         <div className="grid md:grid-cols-3 gap-4">
           {aiRecs.map((rec, i) => (
@@ -338,10 +337,10 @@ const DashboardPage = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="rounded-2xl p-5 bg-card border border-border hover:border-primary/40 hover:shadow-[var(--shadow-card)] transition-all"
+              className="rounded-2xl p-5 bg-card border border-border hover:border-primary/40 hover:shadow-[var(--shadow-card)] transition-premium"
             >
               <div className="flex items-start gap-3">
-                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-base shrink-0">
+                <div className="h-9 w-9 rounded-xl bg-accent flex items-center justify-center text-base shrink-0 border border-primary/15">
                   🤖
                 </div>
                 <p className="text-sm text-foreground leading-relaxed">{rec.message}</p>

@@ -33,7 +33,7 @@ export const WeatherBadge = ({ lat, lon, variant = "inline", prefix }: WeatherBa
 
   if (loading) {
     return variant === "card" ? (
-      <Skeleton className="h-12 w-full" />
+      <Skeleton className="h-14 w-full rounded-2xl" />
     ) : (
       <Skeleton className="h-4 w-32 inline-block" />
     );
@@ -43,18 +43,23 @@ export const WeatherBadge = ({ lat, lon, variant = "inline", prefix }: WeatherBa
 
   if (variant === "card") {
     return (
-      <div className="bg-accent rounded-lg p-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl">{weather.emoji}</span>
-          <span className="text-sm text-foreground font-medium">{weather.description}</span>
+      <div className="rounded-2xl p-4 bg-accent border border-primary/15 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="text-3xl">{weather.emoji}</span>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-primary-dark">Сейчас</p>
+            <p className="text-sm text-foreground font-semibold">{weather.description}</p>
+          </div>
         </div>
-        <span className="text-xl font-bold text-foreground">{weather.temperature}°C</span>
+        <span className="text-3xl font-extrabold font-display text-foreground tabular-nums">
+          {weather.temperature}°
+        </span>
       </div>
     );
   }
 
   return (
-    <span className="text-sm text-foreground">
+    <span className="text-sm text-foreground font-medium">
       {prefix}
       {weather.emoji} {weather.temperature}°C, {weather.description}
     </span>

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { REST_POINTS_GEO } from "@/data/restPoints";
 import { WeatherBadge } from "@/components/WeatherBadge";
 
-// Fix default marker icons (Leaflet + bundlers)
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
@@ -27,7 +26,6 @@ const MapPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Default icon fallback
     L.Icon.Default.mergeOptions({
       iconRetinaUrl: markerIcon2x,
       iconUrl: markerIcon,
@@ -36,22 +34,23 @@ const MapPage = () => {
   }, []);
 
   return (
-    <div className="space-y-6 animate-fade-in max-w-6xl mx-auto">
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+    <div className="space-y-8 animate-fade-up max-w-7xl mx-auto">
+      <div className="text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent border border-primary/20">
+          <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary-dark">
             🛰 Live карта · Иссык-Куль
           </span>
         </div>
-        <h1 className="text-3xl md:text-5xl font-bold font-display tracking-tight">
-          Rest Points региона <span className="text-gradient-premium">Иссык-Куль</span>
+        <h1 className="text-4xl md:text-6xl font-extrabold font-display tracking-tight">
+          Rest Points региона <span className="text-gradient-teal">Иссык-Куль</span>
         </h1>
-        <p className="text-muted-foreground text-sm">
-          Кликните на маркер, чтобы увидеть данные точки и оплатить услуги
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          Кликните на маркер, чтобы увидеть данные точки и оплатить услуги.
         </p>
       </div>
 
-      <div className="rounded-3xl overflow-hidden border border-border shadow-[var(--shadow-elevated)] h-[70vh] relative">
+      <div className="rounded-[2rem] overflow-hidden border border-border shadow-[var(--shadow-elevated)] h-[72vh] relative">
         <MapContainer
           center={[42.45, 77.5]}
           zoom={9}
@@ -69,7 +68,7 @@ const MapPage = () => {
               icon={buildIcon(p.status)}
             >
               <Popup>
-                <div className="space-y-2 min-w-[200px]">
+                <div className="space-y-2 min-w-[220px]">
                   <div className="flex items-center justify-between">
                     <strong className="text-base">{p.name}</strong>
                     <span className="text-lg">{p.status}</span>
@@ -88,13 +87,13 @@ const MapPage = () => {
                       <strong>{p.revenue_som.toLocaleString()} сом</strong>
                     </p>
                     <p className="flex items-center gap-1">
-                      <span className="text-muted-foreground">Текущая погода:</span>{" "}
+                      <span className="text-muted-foreground">Погода:</span>{" "}
                       <WeatherBadge lat={p.lat} lon={p.lon} />
                     </p>
                   </div>
                   <Button
                     size="sm"
-                    className="w-full mt-2"
+                    className="w-full mt-2 rounded-xl bg-gradient-to-br from-primary to-primary-dark"
                     onClick={() =>
                       navigate(`/tourist?point=${encodeURIComponent(p.name)}`)
                     }

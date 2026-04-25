@@ -9,6 +9,7 @@ import { TourosatScore } from "@/components/TourosatScore";
 import { SplitVisualization } from "@/components/SplitVisualization";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
+import { Check } from "lucide-react";
 
 interface ServiceItem {
   icon: string;
@@ -87,23 +88,11 @@ const TouristPage = () => {
   };
 
   const fireConfetti = () => {
-    const primary = "#0891b2";
-    const gold = "#f59e0b";
-    const success = "#10b981";
-    const palette = [primary, gold, success, "#3B82F6", "#ffffff"];
-    confetti({ particleCount: 160, spread: 90, origin: { y: 0.4 }, colors: palette });
-    setTimeout(
-      () => confetti({ particleCount: 100, spread: 110, angle: 60, origin: { x: 0, y: 0.6 }, colors: palette }),
-      200
-    );
-    setTimeout(
-      () => confetti({ particleCount: 100, spread: 110, angle: 120, origin: { x: 1, y: 0.6 }, colors: palette }),
-      400
-    );
-    setTimeout(
-      () => confetti({ particleCount: 80, spread: 360, startVelocity: 25, origin: { y: 0.5 }, colors: palette, scalar: 0.8 }),
-      700
-    );
+    const palette = ["#0891B2", "#0E7490", "#F59E0B", "#FCD34D", "#10B981", "#ffffff"];
+    confetti({ particleCount: 180, spread: 90, origin: { y: 0.4 }, colors: palette });
+    setTimeout(() => confetti({ particleCount: 100, spread: 110, angle: 60, origin: { x: 0, y: 0.6 }, colors: palette }), 200);
+    setTimeout(() => confetti({ particleCount: 100, spread: 110, angle: 120, origin: { x: 1, y: 0.6 }, colors: palette }), 400);
+    setTimeout(() => confetti({ particleCount: 80, spread: 360, startVelocity: 25, origin: { y: 0.5 }, colors: palette, scalar: 0.8 }), 700);
   };
 
   const handlePay = async () => {
@@ -149,71 +138,68 @@ const TouristPage = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="max-w-md mx-auto"
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-lg mx-auto"
       >
-        <div className="rounded-3xl overflow-hidden border border-border shadow-[var(--shadow-premium)] bg-card">
+        <div className="rounded-[2rem] overflow-hidden border border-border shadow-[var(--shadow-premium)] bg-card">
+          {/* Hero success */}
           <div
-            className="px-6 py-10 text-center text-primary-foreground relative overflow-hidden"
-            style={{ background: "var(--gradient-hero)" }}
+            className="px-6 py-12 text-center text-primary-foreground relative overflow-hidden"
+            style={{ background: "var(--gradient-emerald)" }}
           >
-            <div className="absolute inset-0 opacity-20"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 20% 30%, white 1px, transparent 2px), radial-gradient(circle at 80% 70%, white 1px, transparent 2px)",
-                backgroundSize: "40px 40px",
-              }}
-            />
+            <div className="absolute inset-0 opacity-15" style={{
+              backgroundImage:
+                "radial-gradient(circle at 20% 30%, white 1px, transparent 2px), radial-gradient(circle at 80% 70%, white 1px, transparent 2px)",
+              backgroundSize: "40px 40px",
+            }} />
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 14, delay: 0.1 }}
-              className="relative inline-flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur mb-3 shadow-lg"
+              className="relative inline-flex h-24 w-24 items-center justify-center rounded-full bg-white/20 backdrop-blur mb-4 shadow-2xl ring-4 ring-white/20"
             >
-              <span className="text-5xl">✅</span>
+              <Check className="h-12 w-12 text-white" strokeWidth={3} />
             </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-3xl font-bold font-display"
+              className="text-4xl font-extrabold font-display tracking-tight"
             >
               Оплата прошла!
             </motion.h2>
-            <p className="text-sm opacity-90 mt-2 font-medium">📍 {receipt.point_name}</p>
+            <p className="text-sm opacity-90 mt-2 font-semibold tracking-wide">📍 {receipt.point_name}</p>
           </div>
 
           <div className="p-6 space-y-6">
-            <div className="text-center -mt-12 relative">
-              <div className="inline-block bg-card rounded-2xl px-6 py-4 border border-border shadow-[var(--shadow-elevated)]">
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-bold">Итого</p>
-                <p className="text-4xl font-bold font-display text-foreground tabular-nums leading-tight">
-                  {receipt.total_som.toLocaleString("ru-RU")}{" "}
-                  <span className="text-lg font-medium text-muted-foreground">сом</span>
+            <div className="text-center -mt-14 relative">
+              <div className="inline-block bg-card rounded-2xl px-8 py-5 border border-border shadow-[var(--shadow-elevated)]">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">Итого</p>
+                <p className="text-5xl font-extrabold font-display text-foreground tabular-nums leading-tight tracking-tight mt-1">
+                  {receipt.total_som.toLocaleString("ru-RU")}
+                  <span className="text-xl font-medium text-muted-foreground ml-1">сом</span>
                 </p>
               </div>
             </div>
 
-            <div className="divide-y divide-border text-left text-sm rounded-2xl border border-border overflow-hidden">
+            <div className="rounded-2xl border border-border overflow-hidden divide-y divide-border">
               {receipt.services.map((s, i) => (
-                <div key={i} className="flex justify-between py-3 px-4 bg-muted/20">
-                  <span className="font-medium">{s.icon} {s.name}</span>
-                  <span className="font-semibold tabular-nums">
+                <div key={i} className="flex justify-between py-3 px-4 bg-card">
+                  <span className="font-medium text-sm">{s.icon} {s.name}</span>
+                  <span className="font-bold tabular-nums text-sm">
                     {s.price_som.toLocaleString("ru-RU")} сом
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="rounded-2xl border border-border p-5 bg-muted/20">
-              <SplitVisualization total={receipt.total_som} />
-            </div>
+            <SplitVisualization total={receipt.total_som} />
 
             <p className="text-sm text-center text-muted-foreground italic px-4">{receipt.message}</p>
 
             <Button
               variant="outline"
-              className="w-full h-12 rounded-xl font-semibold"
+              className="w-full h-12 rounded-xl font-semibold border-2"
               onClick={() => {
                 setReceipt(null);
                 setServices(initialServices);
@@ -230,28 +216,28 @@ const TouristPage = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-lg mx-auto space-y-6 animate-fade-up">
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent border border-primary/20">
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary-dark">
             🎒 Платежи туриста
           </span>
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
-          Оплата услуг <span className="text-gradient-premium">Rest Point</span>
+        <h1 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight">
+          Оплата услуг <span className="text-gradient-teal">Rest Point</span>
         </h1>
       </div>
 
-      {/* Выбор Rest Point с TOUROSAT Score */}
+      {/* Point + Score */}
       <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
-        <div className="p-6 space-y-4">
-          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground block">
+        <div className="p-6 space-y-5">
+          <label className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground block">
             📍 Выберите Rest Point
           </label>
           <select
             value={selectedPoint}
             onChange={(e) => setSelectedPoint(e.target.value)}
-            className="w-full p-3.5 rounded-xl border border-border bg-background text-foreground text-base font-medium focus:outline-none focus:ring-2 focus:ring-primary/40"
+            className="w-full p-4 rounded-2xl border border-border bg-background text-foreground text-base font-semibold focus:outline-none focus:ring-2 focus:ring-primary/40 transition-premium"
           >
             {REST_POINTS.map((p) => (
               <option key={p.name} value={p.name}>
@@ -264,11 +250,11 @@ const TouristPage = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentPoint.name}
-                initial={{ opacity: 0, y: 6 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col items-center gap-4 pt-4"
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.4 }}
+                className="flex flex-col items-center gap-5 pt-4"
               >
                 <TourosatScore
                   score={currentPoint.score}
@@ -288,21 +274,26 @@ const TouristPage = () => {
         </div>
       </div>
 
-      {/* Услуги */}
+      {/* Services */}
       <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] overflow-hidden">
-        <div className="p-4 space-y-1">
+        <div className="px-6 py-4 border-b border-border">
+          <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-muted-foreground">Услуги</h3>
+        </div>
+        <div className="p-3 space-y-1">
           {services.map((s, i) => (
             <label
               key={i}
-              className="flex items-center justify-between py-3 px-3 cursor-pointer hover:bg-accent rounded-xl transition-colors"
+              className={`flex items-center justify-between py-3 px-3 cursor-pointer rounded-2xl transition-premium ${
+                s.checked ? "bg-accent" : "hover:bg-muted/50"
+              }`}
               onClick={() => toggleService(i)}
             >
               <div className="flex items-center gap-3">
                 <Checkbox checked={s.checked} onCheckedChange={() => toggleService(i)} />
                 <span className="text-xl">{s.icon}</span>
-                <span className="text-foreground font-medium">{s.name}</span>
+                <span className="text-foreground font-semibold">{s.name}</span>
               </div>
-              <span className="font-bold text-foreground tabular-nums">
+              <span className="font-extrabold text-foreground tabular-nums font-display">
                 {s.price_som.toLocaleString("ru-RU")} <span className="text-xs text-muted-foreground font-medium">сом</span>
               </span>
             </label>
@@ -311,20 +302,20 @@ const TouristPage = () => {
       </div>
 
       {/* Total + live split */}
-      <div className="rounded-3xl bg-gradient-to-br from-card to-accent/40 border border-border shadow-[var(--shadow-card)] overflow-hidden">
+      <div className="rounded-3xl bg-gradient-to-br from-card via-card to-accent border border-border shadow-[var(--shadow-card)] overflow-hidden">
         <div className="p-6 space-y-5">
           <div className="flex items-baseline justify-between">
-            <span className="text-xs uppercase tracking-wider text-muted-foreground font-bold">
+            <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground font-bold">
               Итого к оплате
             </span>
             <motion.span
               key={total}
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl font-bold font-display text-foreground tabular-nums"
+              className="text-5xl font-extrabold font-display text-foreground tabular-nums tracking-tight"
             >
               {total.toLocaleString("ru-RU")}{" "}
-              <span className="text-base font-medium text-muted-foreground">сом</span>
+              <span className="text-lg font-medium text-muted-foreground">сом</span>
             </motion.span>
           </div>
           {total > 0 && <SplitVisualization total={total} />}
@@ -334,27 +325,27 @@ const TouristPage = () => {
       {/* Имя и страна */}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Имя</label>
+          <label className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">Имя</label>
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Ваше имя"
-            className="h-11 rounded-xl"
+            className="h-12 rounded-xl bg-card"
           />
         </div>
         <div className="space-y-1.5">
-          <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Страна</label>
+          <label className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">Страна</label>
           <Input
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             placeholder="Ваша страна"
-            className="h-11 rounded-xl"
+            className="h-12 rounded-xl bg-card"
           />
         </div>
       </div>
 
       <Button
-        className="w-full h-16 text-lg font-bold rounded-2xl shadow-[var(--shadow-premium)] bg-gradient-to-br from-primary to-primary-glow hover:opacity-95 active:scale-[0.99] transition"
+        className="w-full h-16 text-lg font-bold rounded-2xl shadow-[var(--shadow-glow-teal)] bg-gradient-to-br from-primary to-primary-dark hover:opacity-95 active:scale-[0.99] transition-premium"
         onClick={handlePay}
         disabled={loading || total === 0}
       >
@@ -365,7 +356,7 @@ const TouristPage = () => {
           : `Оплатить ${total.toLocaleString("ru-RU")} сом →`}
       </Button>
 
-      {error && <p className="text-sm text-destructive text-center">{error}</p>}
+      {error && <p className="text-sm text-destructive text-center font-semibold">{error}</p>}
     </div>
   );
 };
