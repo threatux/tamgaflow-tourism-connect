@@ -314,7 +314,7 @@ const DashboardPage = () => {
                     +{item.amount}
                   </span>
                   <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-                    Split 88/7/5
+                    Split 88 / 12
                   </span>
                 </div>
               </motion.div>

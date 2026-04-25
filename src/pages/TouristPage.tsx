@@ -20,7 +20,6 @@ interface ServiceItem {
 interface Split {
   owner: { amount_som: number };
   platform: { amount_som: number };
-  fund: { amount_som: number };
 }
 
 interface PaymentResult {
@@ -134,8 +133,7 @@ const TouristPage = () => {
         services: selected.map(({ icon, name, price_som }) => ({ icon, name, price_som })),
         split: {
           owner: { amount_som: Math.round(total * 0.88) },
-          platform: { amount_som: Math.round(total * 0.07) },
-          fund: { amount_som: Math.round(total * 0.05) },
+          platform: { amount_som: Math.round(total * 0.12) },
         },
         message: `✅ Спасибо, ${name}! Вы поддержали село и туризм Кыргызстана.`,
         point_name: selectedPoint,
