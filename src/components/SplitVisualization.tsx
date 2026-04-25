@@ -8,112 +8,123 @@ interface SplitVisualizationProps {
 const segments = [
   {
     key: "owner",
-    label: "Владельцу Rest Point",
+    label: "Rest Point Owner",
+    sublabel: "Прямой доход селу",
     icon: "🏠",
     pct: 88,
-    color: "hsl(var(--split-owner))",
+    gradient: "linear-gradient(135deg, #059669, #10B981)",
+    color: "hsl(160 84% 39%)",
+    colorHex: "#10B981",
   },
   {
     key: "platform",
     label: "TamgaFlow",
+    sublabel: "Инфраструктура и AI",
     icon: "⚡",
     pct: 12,
-    color: "hsl(var(--split-platform))",
+    gradient: "linear-gradient(135deg, #0E7490, #0891B2)",
+    color: "hsl(190 91% 36%)",
+    colorHex: "#0891B2",
   },
 ];
 
 export const SplitVisualization = ({ total, compact = false }: SplitVisualizationProps) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {!compact && (
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">
-            Распределение платежа
-          </h3>
-          <span className="text-[10px] font-bold text-muted-foreground tracking-wider px-2 py-0.5 rounded-full bg-muted">
-            88 / 12
+          <div className="flex items-center gap-2">
+            <span className="size-2 rounded-full bg-success animate-pulse" />
+            <h3 className="text-[11px] font-bold text-foreground uppercase tracking-[0.2em]">
+              Распределение платежа
+            </h3>
+          </div>
+          <span className="text-[10px] font-bold text-muted-foreground tracking-[0.15em] uppercase">
+            88 / 12 Split
           </span>
         </div>
       )}
 
-      {/* Stacked bar with shimmer */}
-      <div className="relative">
-        <div className="flex h-7 w-full overflow-hidden rounded-full bg-muted shadow-inner ring-1 ring-border/50">
-          {segments.map((s, i) => (
-            <motion.div
-              key={s.key}
-              initial={{ width: 0 }}
-              animate={{ width: `${s.pct}%` }}
-              transition={{ duration: 1.1, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+      {/* Premium stacked bar */}
+      <div className="flex h-16 w-full overflow-hidden rounded-2xl bg-muted/60 ring-1 ring-border/60 gap-0.5 p-0.5">
+        {segments.map((s, i) => (
+          <motion.div
+            key={s.key}
+            initial={{ width: 0 }}
+            animate={{ width: `${s.pct}%` }}
+            transition={{ duration: 1.0, delay: i * 0.2, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              background: s.gradient,
+              boxShadow: `inset 0 1px 0 hsl(0 0% 100% / 0.25), 0 4px 14px ${s.colorHex}40`,
+            }}
+            className="h-full relative overflow-hidden rounded-[14px] flex items-center justify-between px-4"
+          >
+            {/* Shimmer */}
+            <div
+              className="absolute inset-0 opacity-30 animate-shimmer"
               style={{
-                background: `linear-gradient(135deg, ${s.color}, ${s.color}cc)`,
-                boxShadow: `inset 0 1px 0 hsl(0 0% 100% / 0.4), inset 0 -2px 4px ${s.color}55`,
+                background:
+                  "linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.6), transparent)",
+                width: "40%",
               }}
-              className="h-full relative overflow-hidden"
-            >
-              <div
-                className="absolute inset-0 opacity-40"
-                style={{
-                  background:
-                    "linear-gradient(90deg, transparent, hsl(0 0% 100% / 0.7), transparent)",
-                }}
-              />
-              {s.pct >= 10 && (
-                <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold text-white drop-shadow-sm tabular-nums">
-                  {s.pct}%
-                </span>
-              )}
-            </motion.div>
-          ))}
-        </div>
+            />
+            <span className="relative text-white font-extrabold font-display text-lg tabular-nums drop-shadow-sm">
+              {s.pct}%
+            </span>
+            {s.pct >= 30 && (
+              <span className="relative text-white/95 font-bold text-xs tabular-nums tracking-wide hidden sm:inline">
+                {Math.round((total * s.pct) / 100).toLocaleString("ru-RU")} сом
+              </span>
+            )}
+          </motion.div>
+        ))}
       </div>
 
-      {/* Rows */}
-      <div className="space-y-2.5">
+      {/* Detail rows */}
+      <div className="grid grid-cols-1 gap-2.5">
         {segments.map((s, i) => {
           const amount = Math.round((total * s.pct) / 100);
           return (
             <motion.div
               key={s.key}
-              initial={{ opacity: 0, x: -12 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
-              className="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-card border border-border/60 hover:border-border hover:shadow-[var(--shadow-card)] transition-all"
-              style={{
-                background: `linear-gradient(135deg, ${s.color}10, transparent)`,
-              }}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.4 + i * 0.1 }}
+              className="flex items-center justify-between gap-3 p-4 rounded-2xl border border-border bg-card/80 backdrop-blur transition-premium hover:shadow-[var(--shadow-soft)]"
             >
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex items-center gap-3.5 min-w-0">
                 <div
-                  className="h-12 w-12 shrink-0 rounded-2xl flex items-center justify-center text-xl shadow-sm"
+                  className="h-12 w-12 shrink-0 rounded-xl flex items-center justify-center text-xl"
                   style={{
-                    background: `linear-gradient(135deg, ${s.color}33, ${s.color}11)`,
-                    border: `1px solid ${s.color}55`,
-                    boxShadow: `0 4px 12px ${s.color}22`,
+                    background: `linear-gradient(135deg, ${s.colorHex}1a, ${s.colorHex}08)`,
+                    border: `1px solid ${s.colorHex}33`,
                   }}
                 >
                   {s.icon}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-foreground truncate">{s.label}</p>
-                  <p
-                    className="text-[11px] font-bold tabular-nums tracking-wider"
-                    style={{ color: s.color }}
-                  >
-                    {s.pct}% от платежа
+                  <p className="text-sm font-bold text-foreground leading-tight">
+                    {s.label}
+                  </p>
+                  <p className="text-[11px] text-muted-foreground font-medium mt-0.5">
+                    {s.sublabel}
                   </p>
                 </div>
               </div>
-              <motion.span
-                key={amount}
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="font-extrabold tabular-nums text-lg shrink-0 font-display"
-                style={{ color: s.color }}
-              >
-                {amount.toLocaleString("ru-RU")}{" "}
-                <span className="text-xs font-medium text-muted-foreground">сом</span>
-              </motion.span>
+              <div className="text-right shrink-0">
+                <motion.div
+                  key={amount}
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="font-extrabold font-display text-xl tabular-nums leading-none"
+                  style={{ color: s.color }}
+                >
+                  {amount.toLocaleString("ru-RU")}
+                </motion.div>
+                <div className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-bold mt-1">
+                  сом · {s.pct}%
+                </div>
+              </div>
             </motion.div>
           );
         })}
