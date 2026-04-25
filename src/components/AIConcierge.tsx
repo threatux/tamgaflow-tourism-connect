@@ -71,7 +71,7 @@ const AIConcierge = () => {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 h-16 w-16 rounded-2xl bg-gradient-to-br from-primary to-primary-glow text-primary-foreground shadow-[var(--shadow-premium)] hover:scale-105 active:scale-95 transition-transform flex items-center justify-center animate-pulse-glow group"
+          className="fixed bottom-6 right-6 z-50 h-16 w-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark text-primary-foreground shadow-[var(--shadow-glow-teal)] hover:scale-105 active:scale-95 transition-premium flex items-center justify-center animate-pulse-glow group"
           aria-label="Открыть AI Concierge"
         >
           <Bot className="h-7 w-7" />
@@ -82,10 +82,10 @@ const AIConcierge = () => {
       )}
 
       {open && (
-        <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[560px] max-h-[calc(100vh-2rem)] glass rounded-3xl shadow-[var(--shadow-premium)] flex flex-col animate-scale-in overflow-hidden border border-border">
+        <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[560px] max-h-[calc(100vh-2rem)] glass-strong rounded-3xl shadow-[var(--shadow-premium)] flex flex-col animate-scale-in overflow-hidden border border-border">
           <div
             className="flex items-center justify-between p-4 text-primary-foreground"
-            style={{ background: "var(--gradient-premium)" }}
+            style={{ background: "var(--gradient-teal)" }}
           >
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center">
@@ -121,7 +121,7 @@ const AIConcierge = () => {
                   className={cn(
                     "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm whitespace-pre-wrap shadow-sm",
                     m.role === "user"
-                      ? "bg-gradient-to-br from-primary to-primary-glow text-primary-foreground rounded-br-sm"
+                      ? "bg-gradient-to-br from-primary to-primary-dark text-primary-foreground rounded-br-sm"
                       : "bg-card border border-border text-foreground rounded-bl-sm"
                   )}
                 >
@@ -153,7 +153,7 @@ const AIConcierge = () => {
               onClick={send}
               disabled={loading || !input.trim()}
               size="icon"
-              className="rounded-xl bg-gradient-to-br from-primary to-primary-glow shrink-0"
+              className="rounded-xl bg-gradient-to-br from-primary to-primary-dark shrink-0"
             >
               <Send className="h-4 w-4" />
             </Button>

@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 
 import { WeatherBadge } from "@/components/WeatherBadge";
 import { TourosatScore } from "@/components/TourosatScore";
-import { SplitVisualization } from "@/components/SplitVisualization";
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 const MOCK_CARD = {
   card: {
@@ -66,55 +66,55 @@ const OwnerPage = () => {
     }
   };
 
-
   return (
-    <div className="max-w-2xl mx-auto space-y-8 animate-fade-in">
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+    <div className="max-w-2xl mx-auto space-y-8 animate-fade-up">
+      <div className="text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent border border-primary/20">
+          <Sparkles className="h-3 w-3 text-primary-dark" />
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary-dark">
             🏠 Карточка владельца
           </span>
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold font-display tracking-tight">
-          Создайте карточку <span className="text-gradient-premium">Rest Point</span>
+        <h1 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight">
+          Создайте карточку <span className="text-gradient-teal">Rest Point</span>
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-lg">
           TOUROSAT AI рассчитает цены на основе спутниковых данных
         </p>
       </div>
 
-      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] p-6 space-y-4">
+      <div className="rounded-3xl bg-card border border-border shadow-[var(--shadow-card)] p-7 space-y-5">
         <Textarea
           placeholder="Опишите ваш Rest Point: сколько юрт, есть ли кафе, Wi-Fi, какие активности, что рядом..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          className="rounded-xl resize-none"
+          className="rounded-2xl resize-none text-base"
         />
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Широта</label>
+            <label className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">Широта</label>
             <Input
               type="number"
               step="0.01"
               value={lat}
               onChange={(e) => setLat(Number(e.target.value))}
-              className="h-11 rounded-xl"
+              className="h-12 rounded-xl"
             />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Долгота</label>
+            <label className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">Долгота</label>
             <Input
               type="number"
               step="0.01"
               value={lon}
               onChange={(e) => setLon(Number(e.target.value))}
-              className="h-11 rounded-xl"
+              className="h-12 rounded-xl"
             />
           </div>
         </div>
         <Button
-          className="w-full h-14 text-base font-bold rounded-2xl shadow-[var(--shadow-premium)] bg-gradient-to-br from-primary to-primary-glow"
+          className="w-full h-14 text-base font-bold rounded-2xl shadow-[var(--shadow-glow-teal)] bg-gradient-to-br from-primary to-primary-dark"
           onClick={handleSubmit}
           disabled={loading}
         >
@@ -126,18 +126,18 @@ const OwnerPage = () => {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="rounded-3xl overflow-hidden border border-border shadow-[var(--shadow-premium)] bg-card">
+          <div className="rounded-[2rem] overflow-hidden border border-border shadow-[var(--shadow-premium)] bg-card">
             {/* Hero score */}
             <div
-              className="px-6 py-10 flex flex-col items-center text-center gap-4 relative overflow-hidden"
+              className="px-6 py-12 flex flex-col items-center text-center gap-4 relative overflow-hidden"
               style={{ background: "var(--gradient-surface)" }}
             >
-              <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary/15 rounded-full blur-3xl" />
-              <div className="absolute -bottom-12 -left-12 w-48 h-48 bg-gold/10 rounded-full blur-3xl" />
+              <div className="absolute -top-12 -right-12 w-56 h-56 bg-primary/15 rounded-full blur-3xl" />
+              <div className="absolute -bottom-12 -left-12 w-56 h-56 bg-gold/10 rounded-full blur-3xl" />
               <div className="relative">
-                <h2 className="text-3xl font-bold font-display text-foreground mb-6">{result.card.name}</h2>
+                <h2 className="text-3xl md:text-4xl font-extrabold font-display text-foreground mb-8 tracking-tight">{result.card.name}</h2>
                 <TourosatScore
                   score={result.card.tourism_score}
                   confidence={parseFloat(result.card.ai_confidence)}
@@ -146,21 +146,21 @@ const OwnerPage = () => {
               </div>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-7 space-y-6">
               <div className="rounded-2xl border border-border overflow-hidden divide-y divide-border">
                 {result.services.map((s, i) => (
-                  <div key={i} className="flex items-center justify-between py-3 px-4 hover:bg-muted/40 transition-colors">
-                    <div className="flex items-center gap-2.5">
-                      <span className="text-lg">{s.icon}</span>
+                  <div key={i} className="flex items-center justify-between py-3.5 px-4 hover:bg-accent transition-colors">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xl">{s.icon}</span>
                       <div>
-                        <p className="font-semibold text-foreground text-sm">{s.name}</p>
+                        <p className="font-bold text-foreground text-sm">{s.name}</p>
                         <p className="text-xs text-muted-foreground">{s.unit}</p>
                       </div>
                     </div>
                     {s.price_som === 0 ? (
-                      <span className="text-xs font-bold text-primary uppercase tracking-wider px-2 py-1 rounded-full bg-primary/10">Бесплатно</span>
+                      <span className="text-[10px] font-bold text-primary uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20">Бесплатно</span>
                     ) : (
-                      <span className="font-bold text-foreground tabular-nums">
+                      <span className="font-extrabold text-foreground tabular-nums font-display">
                         {s.price_som.toLocaleString("ru-RU")} <span className="text-xs font-medium text-muted-foreground">сом</span>
                       </span>
                     )}
@@ -175,10 +175,10 @@ const OwnerPage = () => {
                 </p>
               </div>
 
-              <p className="text-sm text-muted-foreground italic text-center px-2">{result.pricing_note}</p>
+              <p className="text-sm text-muted-foreground italic text-center px-2 leading-relaxed">{result.pricing_note}</p>
 
-              <div className="rounded-2xl border-2 border-dashed border-border p-5 text-center space-y-2 bg-muted/20">
-                <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">QR код для туристов</p>
+              <div className="rounded-2xl border-2 border-dashed border-border p-6 text-center space-y-2 bg-muted/30">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">QR код для туристов</p>
                 <p className="font-mono text-2xl font-bold text-foreground tracking-wider">
                   {result.qr_code.id}
                 </p>
@@ -188,8 +188,8 @@ const OwnerPage = () => {
               </div>
 
               <div
-                className="rounded-2xl p-6 text-center text-primary-foreground relative overflow-hidden shadow-[var(--shadow-premium)]"
-                style={{ background: "var(--gradient-hero)" }}
+                className="rounded-2xl p-7 text-center text-primary-foreground relative overflow-hidden shadow-[var(--shadow-premium)]"
+                style={{ background: "var(--gradient-emerald)" }}
               >
                 <div className="absolute inset-0 opacity-15"
                   style={{
@@ -199,10 +199,11 @@ const OwnerPage = () => {
                   }}
                 />
                 <div className="relative">
-                  <p className="text-xs uppercase tracking-widest opacity-90 font-bold">📈 Прогноз дохода за сезон</p>
-                  <p className="text-4xl font-bold font-display tracking-tight mt-2">
+                  <p className="text-xs uppercase tracking-[0.2em] opacity-90 font-bold">📈 Прогноз дохода за сезон</p>
+                  <p className="text-4xl md:text-5xl font-extrabold font-display tracking-tight mt-2">
                     {result.revenue_forecast.season_revenue_som}
                   </p>
+                  <p className="text-xs opacity-80 mt-2 font-semibold">88% этой суммы — ваш прямой доход</p>
                 </div>
               </div>
             </div>
