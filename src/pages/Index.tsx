@@ -7,7 +7,7 @@ const stats = [
   { value: "17", label: "Rest Points", accent: "primary" },
   { value: "$1.1B", label: "Туризм КР 2025", accent: "gold" },
   { value: "95%", label: "Не монетизированы", accent: "primary" },
-  { value: "88/7/5", label: "Split-модель", accent: "success" },
+  { value: "88/12", label: "Split-модель", accent: "success" },
 ];
 
 const steps = [
@@ -21,7 +21,7 @@ const steps = [
   {
     icon: "🎒",
     title: "Турист",
-    desc: "Выбирает услуги и оплачивает — деньги делятся автоматически по модели 88/7/5.",
+    desc: "Выбирает услуги и оплачивает — деньги делятся автоматически: 88% владельцу, 12% платформе.",
     cta: "Оплатить услуги",
     to: "/tourist",
   },
@@ -236,7 +236,7 @@ const Index = () => {
             <ul className="space-y-3 text-sm text-foreground/80">
               <li className="flex gap-2"><span className="text-[hsl(var(--success))]">●</span>TOUROSAT AI оценивает каждую точку по спутнику</li>
               <li className="flex gap-2"><span className="text-[hsl(var(--success))]">●</span>Автоматическое ценообразование и карточка</li>
-              <li className="flex gap-2"><span className="text-[hsl(var(--success))]">●</span>Прозрачный split: 88% / 7% / 5%</li>
+              <li className="flex gap-2"><span className="text-[hsl(var(--success))]">●</span>Прозрачный split: 88% владельцу · 12% платформе</li>
               <li className="flex gap-2"><span className="text-[hsl(var(--success))]">●</span>Живой дашборд с AI-рекомендациями</li>
             </ul>
           </div>

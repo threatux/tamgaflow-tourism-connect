@@ -61,7 +61,7 @@ interface DashboardData {
 const statCards = [
   { key: "total_transactions" as const, label: "Транзакций", icon: Activity, accent: "primary" },
   { key: "total_revenue_display" as const, label: "Общий доход", icon: Banknote, accent: "success" },
-  { key: "fund_share_display" as const, label: "Доля Фонда", icon: TrendingUp, accent: "gold" },
+  { key: "fund_share_display" as const, label: "Доля платформы (12%)", icon: TrendingUp, accent: "gold" },
   { key: "rest_points_active" as const, label: "Rest Points", icon: MapPin, accent: "primary" },
 ];
 
@@ -314,7 +314,7 @@ const DashboardPage = () => {
                     +{item.amount}
                   </span>
                   <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-                    Split 88/7/5
+                    Split 88 / 12
                   </span>
                 </div>
               </motion.div>
