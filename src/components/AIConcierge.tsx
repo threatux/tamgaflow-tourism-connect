@@ -71,10 +71,10 @@ const AIConcierge = () => {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 h-16 w-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark text-primary-foreground shadow-[var(--shadow-glow-teal)] hover:scale-105 active:scale-95 transition-premium flex items-center justify-center animate-pulse-glow group"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-gradient-to-br from-primary to-primary-dark text-primary-foreground shadow-[var(--shadow-glow-teal)] hover:scale-105 active:scale-95 transition-premium flex items-center justify-center animate-pulse-glow group"
           aria-label="Открыть AI Concierge"
         >
-          <Bot className="h-7 w-7" />
+          <Bot className="h-6 w-6 sm:h-7 sm:w-7" />
           <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-gold border-2 border-background flex items-center justify-center">
             <Sparkles className="h-2.5 w-2.5 text-gold-foreground" />
           </span>
@@ -82,7 +82,7 @@ const AIConcierge = () => {
       )}
 
       {open && (
-        <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[560px] max-h-[calc(100vh-2rem)] glass-strong rounded-3xl shadow-[var(--shadow-premium)] flex flex-col animate-scale-in overflow-hidden border border-border">
+        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] max-w-[calc(100vw-2rem)] h-[calc(100vh-6rem)] sm:h-[560px] max-h-[calc(100vh-2rem)] glass-strong rounded-3xl shadow-[var(--shadow-premium)] flex flex-col animate-scale-in overflow-hidden border border-border">
           <div
             className="flex items-center justify-between p-4 text-primary-foreground"
             style={{ background: "var(--gradient-teal)" }}
