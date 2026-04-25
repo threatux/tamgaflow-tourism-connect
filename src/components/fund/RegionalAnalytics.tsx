@@ -37,7 +37,7 @@ export const RegionalAnalytics = () => {
               <th className="py-3 px-4 font-bold">Бронирований</th>
               <th className="py-3 px-4 font-bold">Avg Score</th>
               <th className="py-3 px-4 font-bold w-[280px]">Оборот сезона</th>
-              <th className="py-3 px-6 font-bold text-right">Доля Фонда (5%)</th>
+              <th className="py-3 px-6 font-bold text-right">Доля Фонда (12%)</th>
             </tr>
           </thead>
           <tbody>

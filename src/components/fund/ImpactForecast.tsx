@@ -14,7 +14,7 @@ export const ImpactForecast = () => {
           <div>
             <h2 className="text-xl font-extrabold font-display tracking-tight">Impact & Growth Forecast</h2>
             <p className="text-[12px] text-muted-foreground mt-0.5">
-              Прогноз дохода Фонда (5%) и общего GMV по месяцам сезона
+              Прогноз дохода Фонда (12%) и общего GMV по месяцам сезона
             </p>
           </div>
         </div>
@@ -51,7 +51,7 @@ export const ImpactForecast = () => {
                   boxShadow: "0 10px 30px -10px hsl(190 91% 36% / 0.25)",
                   fontSize: 12,
                 }}
-                formatter={(v: number, name: string) => [fmtCurrency(v), name === "gmv" ? "GMV" : "Fund (5%)"]}
+                formatter={(v: number, name: string) => [fmtCurrency(v), name === "gmv" ? "GMV" : "Fund (12%)"]}
                 labelStyle={{ fontWeight: 700, color: "hsl(222 47% 11%)" }}
               />
               <Area type="monotone" dataKey="gmv" stroke="hsl(190 91% 36%)" strokeWidth={2.5} fill="url(#gmv)" />
@@ -102,7 +102,7 @@ export const ImpactForecast = () => {
               <div className="border-t border-border pt-3 mt-3 flex items-end justify-between">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.14em] font-bold text-muted-foreground">
-                    Fund gain (5%)
+                    Fund gain (12%)
                   </p>
                   <p className="text-2xl font-extrabold font-display text-gold-deep tabular-nums mt-0.5">
                     +{fmtCurrency(s.addedFundShare)}

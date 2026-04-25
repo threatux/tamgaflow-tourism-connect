@@ -277,10 +277,10 @@ const Index = () => {
               <SplitVisualization total={6550} compact />
               <div className="mt-3 pt-3 border-t border-border/60 flex items-center justify-between">
                 <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
-                  Fund · 5%
+                  Platform · 12%
                 </span>
-                <span className="text-xs font-extrabold text-gold-deep tabular-nums">
-                  +325 KGS
+                <span className="text-xs font-extrabold text-primary-dark tabular-nums">
+                  786 KGS
                 </span>
               </div>
             </motion.div>
@@ -513,7 +513,7 @@ const Index = () => {
                   "TOUROSAT делает малые Rest Points видимыми и даёт им рейтинг",
                   "Владелец запускает доходный digital listing за минуты",
                   "Турист быстро находит и оплачивает прозрачно",
-                  "Прозрачный split: 88% владельцу · 12% платформе · +5% Фонду",
+                  "Прозрачный split: 88% владельцу · 12% платформе TamgaFlow",
                   "Спутниковые данные → практические решения и AI-аналитика",
                 ].map((t, i) => (
                   <li key={i} className="flex gap-3 text-[14px] leading-relaxed text-foreground/85">
