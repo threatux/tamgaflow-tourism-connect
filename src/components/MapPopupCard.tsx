@@ -48,7 +48,7 @@ export const MapPopupCard = ({ point, onPay, onDetails }: MapPopupCardProps) => 
       initial={{ opacity: 0, scale: 0.96, y: 6 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      className="w-[360px] rounded-3xl overflow-hidden border border-border/80 bg-card/95 backdrop-blur-xl shadow-[var(--shadow-premium)]"
+      className="w-[280px] sm:w-[340px] max-w-[calc(100vw-2rem)] rounded-2xl sm:rounded-3xl overflow-hidden border border-border/80 bg-card/95 backdrop-blur-xl shadow-[var(--shadow-premium)]"
       style={{ fontFamily: "Inter, Manrope, system-ui, sans-serif" }}
     >
       {/* Header */}

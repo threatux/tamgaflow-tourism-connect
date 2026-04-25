@@ -115,47 +115,47 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="space-y-28 md:space-y-36">
+    <div className="space-y-20 sm:space-y-28 md:space-y-36">
       {/* ============== HERO ============== */}
-      <section className="relative pt-6 md:pt-12 pb-4">
+      <section className="relative pt-2 sm:pt-6 md:pt-12 pb-4">
         {/* Ambient blobs */}
         <div className="pointer-events-none absolute top-10 right-[5%] w-[36rem] h-[36rem] bg-primary/15 rounded-full blur-[140px] -z-10" />
         <div className="pointer-events-none absolute top-40 left-[5%] w-[30rem] h-[30rem] bg-gold/10 rounded-full blur-[140px] -z-10" />
         <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-[40rem] h-[24rem] bg-success/8 rounded-full blur-[160px] -z-10" />
 
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* Left: text */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7 space-y-8"
+            className="lg:col-span-7 space-y-6 sm:space-y-8"
           >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent border border-primary/20">
-              <span className="size-1.5 rounded-full bg-primary animate-pulse" />
-              <Satellite className="h-3 w-3 text-primary" />
-              <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-primary-dark">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent border border-primary/20 max-w-full">
+              <span className="size-1.5 rounded-full bg-primary animate-pulse shrink-0" />
+              <Satellite className="h-3 w-3 text-primary shrink-0" />
+              <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.14em] sm:tracking-[0.18em] uppercase text-primary-dark truncate">
                 Powered by TOUROSAT · Satellite Intelligence
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-6xl xl:text-7xl font-extrabold font-display leading-[1.02] tracking-[-0.03em] text-balance">
+            <h1 className="text-[34px] leading-[1.06] sm:text-5xl md:text-6xl xl:text-7xl font-extrabold font-display sm:leading-[1.02] tracking-[-0.025em] sm:tracking-[-0.03em] text-balance">
               Каждый Rest Point.<br />
               Каждый турист.{" "}
               <span className="text-gradient-gold">Каждый сом</span>
               <span className="text-muted-foreground/80"> — на своём месте.</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground max-w-[58ch] leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-[58ch] leading-relaxed">
               Спутниковый ИИ помогает владельцам Rest Points запускать доходный
               бизнес, а туристам — легко находить и оплачивать лучшие места.
             </p>
 
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 pt-1 sm:pt-2">
               <Button
                 size="lg"
                 onClick={() => navigate("/map")}
-                className="group relative h-14 px-8 text-base font-bold rounded-2xl bg-gradient-to-br from-primary to-primary-dark hover:shadow-[var(--shadow-glow-teal)] hover:-translate-y-0.5 transition-premium shadow-[var(--shadow-elevated)]"
+                className="group relative h-14 px-6 sm:px-8 text-base font-bold rounded-2xl bg-gradient-to-br from-primary to-primary-dark hover:shadow-[var(--shadow-glow-teal)] hover:-translate-y-0.5 transition-premium shadow-[var(--shadow-elevated)] w-full sm:w-auto justify-center"
               >
                 <MapPin className="mr-1 h-5 w-5" />
                 Открыть карту
@@ -165,14 +165,14 @@ const Index = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => navigate("/owner")}
-                className="h-14 px-8 text-base font-bold rounded-2xl border-2 border-border bg-card hover:border-foreground/30 hover:-translate-y-0.5 transition-premium"
+                className="h-14 px-6 sm:px-8 text-base font-bold rounded-2xl border-2 border-border bg-card hover:border-foreground/30 hover:-translate-y-0.5 transition-premium w-full sm:w-auto justify-center"
               >
                 Я владелец Rest Point
               </Button>
             </div>
 
             {/* Trust chips */}
-            <div className="pt-6 flex flex-wrap gap-2">
+            <div className="pt-4 sm:pt-6 flex flex-wrap gap-2">
               {trustChips.map((c) => (
                 <span
                   key={c.label}
@@ -193,7 +193,7 @@ const Index = () => {
             className="lg:col-span-5 relative"
           >
             {/* Big visual base */}
-            <div className="relative rounded-[2rem] overflow-hidden shadow-[var(--shadow-premium)] aspect-[4/5] lg:aspect-[5/6]">
+            <div className="relative rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-[var(--shadow-premium)] aspect-[4/5] lg:aspect-[5/6]">
               <img
                 src={heroImage}
                 alt="Issyk-Kul lake — premium Kyrgyzstan tourism intelligence"
@@ -208,17 +208,17 @@ const Index = () => {
                 initial={{ opacity: 0, x: -16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
-                className="absolute top-5 left-5 glass-strong rounded-2xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-[var(--shadow-card)]"
+                className="absolute top-3 left-3 sm:top-5 sm:left-5 glass-strong rounded-xl sm:rounded-2xl px-2.5 py-2 sm:px-3.5 sm:py-2.5 flex items-center gap-2 sm:gap-2.5 shadow-[var(--shadow-card)]"
               >
-                <div className="relative h-8 w-8 rounded-lg bg-primary/15 flex items-center justify-center">
-                  <MapPin className="h-4 w-4 text-primary-dark" />
+                <div className="relative h-7 w-7 sm:h-8 sm:w-8 rounded-lg bg-primary/15 flex items-center justify-center">
+                  <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary-dark" />
                   <span className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-success animate-pulse" />
                 </div>
                 <div className="leading-tight">
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground font-bold">
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.16em] sm:tracking-[0.18em] text-muted-foreground font-bold">
                     Live Map
                   </p>
-                  <p className="text-xs font-bold text-foreground">17 Rest Points</p>
+                  <p className="text-[11px] sm:text-xs font-bold text-foreground">17 Rest Points</p>
                 </div>
               </motion.div>
 
@@ -227,26 +227,26 @@ const Index = () => {
                 initial={{ opacity: 0, x: 16 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.7, duration: 0.6 }}
-                className="absolute top-5 right-5 glass-strong rounded-2xl px-3.5 py-2.5 max-w-[210px] shadow-[var(--shadow-card)]"
+                className="absolute top-3 right-3 sm:top-5 sm:right-5 glass-strong rounded-xl sm:rounded-2xl px-2.5 py-2 sm:px-3.5 sm:py-2.5 max-w-[160px] sm:max-w-[210px] shadow-[var(--shadow-card)]"
               >
                 <div className="flex items-center gap-1.5 mb-1">
                   <Sparkles className="h-3 w-3 text-gold-deep" />
-                  <p className="text-[10px] uppercase tracking-[0.18em] text-gold-deep font-bold">
+                  <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.16em] sm:tracking-[0.18em] text-gold-deep font-bold">
                     AI Recommendation
                   </p>
                 </div>
-                <p className="text-xs font-semibold text-foreground leading-snug">
+                <p className="text-[11px] sm:text-xs font-semibold text-foreground leading-snug">
                   Tamga Coast — high scenery + strong access
                 </p>
               </motion.div>
             </div>
 
-            {/* Score card — overlapping */}
+            {/* Floating side cards — only desktop. On mobile they sit below. */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.7 }}
-              className="absolute -left-4 lg:-left-10 -bottom-6 glass-strong rounded-[1.75rem] p-5 shadow-[var(--shadow-premium)] w-[230px] animate-ambient"
+              className="hidden lg:block absolute -left-10 -bottom-6 glass-strong rounded-[1.75rem] p-5 shadow-[var(--shadow-premium)] w-[230px] animate-ambient"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
@@ -261,12 +261,11 @@ const Index = () => {
               </div>
             </motion.div>
 
-            {/* Split mini card — overlapping bottom right */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.7 }}
-              className="absolute -right-4 lg:-right-8 -bottom-10 glass-strong rounded-2xl p-4 shadow-[var(--shadow-elevated)] w-[230px]"
+              className="hidden lg:block absolute -right-8 -bottom-10 glass-strong rounded-2xl p-4 shadow-[var(--shadow-elevated)] w-[230px]"
             >
               <div className="flex items-center justify-between mb-3">
                 <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
@@ -284,6 +283,40 @@ const Index = () => {
                 </span>
               </div>
             </motion.div>
+
+            {/* Mobile/tablet stack — replaces overlapping floats */}
+            <div className="lg:hidden mt-5 grid sm:grid-cols-2 gap-4">
+              <div className="rounded-2xl p-4 bg-card border border-border shadow-[var(--shadow-card)]">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+                    TOUROSAT Score
+                  </span>
+                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-success/10 text-success-deep border border-success/20">
+                    ● Live
+                  </span>
+                </div>
+                <div className="flex justify-center">
+                  <TourosatScore score={92} confidence={0.92} size="md" showSources={false} />
+                </div>
+              </div>
+              <div className="rounded-2xl p-4 bg-card border border-border shadow-[var(--shadow-card)]">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-muted-foreground">
+                    Split · 6,550 KGS
+                  </span>
+                  <CircleDollarSign className="h-3.5 w-3.5 text-primary" />
+                </div>
+                <SplitVisualization total={6550} compact />
+                <div className="mt-3 pt-3 border-t border-border/60 flex items-center justify-between">
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold">
+                    Platform · 12%
+                  </span>
+                  <span className="text-xs font-extrabold text-primary-dark tabular-nums">
+                    786 KGS
+                  </span>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -349,7 +382,7 @@ const Index = () => {
           <span className="pill bg-gold/10 text-gold-deep border border-gold/30 mx-auto">
             <Sparkles className="h-3 w-3" /> Как это работает
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight">
             Три роли — одна экосистема
           </h2>
           <p className="text-muted-foreground text-lg">
@@ -423,7 +456,7 @@ const Index = () => {
           <span className="pill bg-destructive/10 text-destructive border border-destructive/20 mx-auto">
             <AlertTriangle className="h-3 w-3" /> Проблема → Решение
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight">
             Что мы меняем в туризме Кыргызстана
           </h2>
         </div>
@@ -435,7 +468,7 @@ const Index = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl p-8 border border-destructive/20 shadow-[var(--shadow-card)] overflow-hidden"
+            className="relative rounded-3xl p-5 sm:p-8 border border-destructive/20 shadow-[var(--shadow-card)] overflow-hidden"
             style={{
               background:
                 "linear-gradient(135deg, hsl(0 84% 97%), hsl(0 60% 99%) 60%, hsl(0 0% 100%))",
@@ -485,7 +518,7 @@ const Index = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl p-8 border border-primary/25 shadow-[var(--shadow-elevated)] overflow-hidden"
+            className="relative rounded-3xl p-5 sm:p-8 border border-primary/25 shadow-[var(--shadow-elevated)] overflow-hidden"
             style={{
               background:
                 "linear-gradient(135deg, hsl(188 95% 96%), hsl(160 60% 97%) 60%, hsl(0 0% 100%))",
@@ -553,12 +586,12 @@ const Index = () => {
         />
         <div className="absolute inset-0 bg-dots opacity-40 -z-10" />
 
-        <div className="grid lg:grid-cols-12 gap-10 p-8 md:p-12 items-center">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 p-5 sm:p-8 md:p-12 items-center">
           <div className="lg:col-span-7 space-y-6">
             <span className="pill bg-card border border-primary/20 text-primary-dark">
               <Satellite className="h-3 w-3" /> TOUROSAT · Satellite Intelligence Layer
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold font-display tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold font-display tracking-tight leading-tight">
               <span className="text-gradient-teal">TOUROSAT</span> превращает спутниковые данные<br className="hidden md:block" />
               {" "}в туристическую экономику.
             </h2>
@@ -693,7 +726,7 @@ const Index = () => {
 
       {/* ============== BOTTOM CTA ============== */}
       <section
-        className="relative rounded-[2rem] overflow-hidden p-10 md:p-16 shadow-[var(--shadow-premium)]"
+        className="relative rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden p-6 sm:p-10 md:p-16 shadow-[var(--shadow-premium)]"
         style={{ background: "var(--gradient-hero)" }}
       >
         <div
@@ -707,15 +740,15 @@ const Index = () => {
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-gold/30 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-primary-glow/40 rounded-full blur-3xl" />
 
-        <div className="relative grid lg:grid-cols-12 gap-10 items-center text-primary-foreground">
+        <div className="relative grid lg:grid-cols-12 gap-8 lg:gap-10 items-center text-primary-foreground">
           <div className="lg:col-span-8 space-y-5">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/25 text-[11px] font-bold tracking-[0.18em] uppercase backdrop-blur">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/25 text-[10px] sm:text-[11px] font-bold tracking-[0.14em] sm:tracking-[0.18em] uppercase backdrop-blur">
               <Satellite className="h-3 w-3" /> Ready for demo · Series-A grade
             </span>
-            <h2 className="text-4xl md:text-6xl font-extrabold font-display leading-[1.05] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold font-display leading-[1.05] tracking-tight">
               От спутника — <span className="text-gold-light">к доходу</span> каждой юрты.
             </h2>
-            <p className="text-base md:text-lg opacity-90 font-medium max-w-xl">
+            <p className="text-sm sm:text-base md:text-lg opacity-90 font-medium max-w-xl">
               Для владельцев — больше дохода. Для туристов — лучший выбор.
               Для Фонда — прозрачный поток и точные решения.
             </p>

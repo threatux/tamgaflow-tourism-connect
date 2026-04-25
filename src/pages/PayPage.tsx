@@ -173,9 +173,9 @@ const PayPage = () => {
                 <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">
                   Итого
                 </p>
-                <p className="text-5xl font-extrabold font-display text-foreground tabular-nums leading-tight tracking-tight mt-1">
+                <p className="text-4xl sm:text-5xl font-extrabold font-display text-foreground tabular-nums leading-tight tracking-tight mt-1">
                   {receipt.total_som.toLocaleString("ru-RU")}
-                  <span className="text-xl font-medium text-muted-foreground ml-1">сом</span>
+                  <span className="text-lg sm:text-xl font-medium text-muted-foreground ml-1">сом</span>
                 </p>
               </div>
             </div>
@@ -220,12 +220,12 @@ const PayPage = () => {
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-fade-up">
       <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent border border-primary/20">
-          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary-dark">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent border border-primary/20 max-w-full">
+          <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.14em] sm:tracking-[0.18em] text-primary-dark truncate">
             💳 Оплата · Прозрачный split 88 / 12
           </span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight">
           Бронирование <span className="text-gradient-teal">Rest Point</span>
         </h1>
       </div>
@@ -310,17 +310,17 @@ const PayPage = () => {
               key={total}
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-5xl font-extrabold font-display text-foreground tabular-nums tracking-tight"
+              className="text-3xl sm:text-5xl font-extrabold font-display text-foreground tabular-nums tracking-tight"
             >
               {total.toLocaleString("ru-RU")}{" "}
-              <span className="text-lg font-medium text-muted-foreground">сом</span>
+              <span className="text-base sm:text-lg font-medium text-muted-foreground">сом</span>
             </motion.span>
           </div>
           {total > 0 && <SplitVisualization total={total} />}
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <label className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
             Имя

@@ -149,38 +149,66 @@ export const LivePaymentStream = () => {
                 animate={{ opacity: 1, x: 0, backgroundColor: "rgba(255,255,255,0)" }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: isNew ? 1.6 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="grid grid-cols-12 gap-3 px-6 py-3.5 items-center hover:bg-white/[0.04] transition-colors text-sm"
+                className="px-4 sm:px-6 py-3.5 hover:bg-white/[0.04] transition-colors text-sm
+                  flex flex-col gap-2
+                  md:grid md:grid-cols-12 md:gap-3 md:items-center"
               >
-                <div className="col-span-2 flex flex-col">
+                {/* Mobile row 1: time + status */}
+                <div className="flex items-center justify-between md:hidden">
+                  <div className="flex flex-col">
+                    <span className="text-[11px] text-white/45 font-mono tabular-nums">
+                      {fmtTime(tx.timestamp)}
+                    </span>
+                    <span className="text-[10px] text-white/35">{fmtRelative(tx.timestamp)} ago</span>
+                  </div>
+                  <span
+                    className={cn(
+                      "inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border",
+                      statusBadge(tx.status),
+                    )}
+                  >
+                    {statusLabel[tx.status]}
+                  </span>
+                </div>
+
+                {/* Desktop time col */}
+                <div className="hidden md:flex md:col-span-2 flex-col">
                   <span className="text-[11px] text-white/45 font-mono tabular-nums">
                     {fmtTime(tx.timestamp)}
                   </span>
                   <span className="text-[10px] text-white/35 mt-0.5">{fmtRelative(tx.timestamp)} ago</span>
                 </div>
-                <div className="col-span-3 min-w-0">
+
+                <div className="md:col-span-3 min-w-0">
                   <p className="font-bold text-white truncate">{tx.pointName}</p>
                   <p className="text-[11px] text-white/50 truncate">{tx.region}</p>
                 </div>
-                <div className="col-span-2 min-w-0 flex items-center gap-2">
+                <div className="md:col-span-2 min-w-0 flex items-center gap-2">
                   <span className="text-base">{tx.payerFlag}</span>
                   <div className="min-w-0">
                     <p className="text-[12px] text-white/85 truncate">{tx.payer}</p>
                     <p className="text-[10px] text-white/40 truncate">{tx.method}</p>
                   </div>
                 </div>
-                <div className="col-span-2 text-right">
-                  <p className="font-bold text-white tabular-nums font-display">
-                    {fmtCurrency(tx.grossAmount)}
-                  </p>
-                  <p className="text-[10px] text-white/40">gross</p>
+
+                {/* Mobile + desktop amount row */}
+                <div className="flex items-center justify-between gap-3 md:contents">
+                  <div className="md:col-span-2 md:text-right">
+                    <p className="font-bold text-white tabular-nums font-display">
+                      {fmtCurrency(tx.grossAmount)}
+                    </p>
+                    <p className="text-[10px] text-white/40">gross</p>
+                  </div>
+                  <div className="md:col-span-2 md:text-right text-right">
+                    <p className="font-extrabold text-gold-light tabular-nums font-display">
+                      +{fmtCurrency(tx.fundShare)}
+                    </p>
+                    <p className="text-[10px] text-white/40">to Fund · 12%</p>
+                  </div>
                 </div>
-                <div className="col-span-2 text-right">
-                  <p className="font-extrabold text-gold-light tabular-nums font-display">
-                    +{fmtCurrency(tx.fundShare)}
-                  </p>
-                  <p className="text-[10px] text-white/40">to Fund · 12%</p>
-                </div>
-                <div className="col-span-1 text-right">
+
+                {/* Desktop status */}
+                <div className="hidden md:block md:col-span-1 text-right">
                   <span
                     className={cn(
                       "inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border",
