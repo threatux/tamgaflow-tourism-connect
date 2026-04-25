@@ -382,7 +382,7 @@ const Index = () => {
           <span className="pill bg-gold/10 text-gold-deep border border-gold/30 mx-auto">
             <Sparkles className="h-3 w-3" /> Как это работает
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight">
             Три роли — одна экосистема
           </h2>
           <p className="text-muted-foreground text-lg">
@@ -456,7 +456,7 @@ const Index = () => {
           <span className="pill bg-destructive/10 text-destructive border border-destructive/20 mx-auto">
             <AlertTriangle className="h-3 w-3" /> Проблема → Решение
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold font-display tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display tracking-tight">
             Что мы меняем в туризме Кыргызстана
           </h2>
         </div>
@@ -468,7 +468,7 @@ const Index = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl p-8 border border-destructive/20 shadow-[var(--shadow-card)] overflow-hidden"
+            className="relative rounded-3xl p-5 sm:p-8 border border-destructive/20 shadow-[var(--shadow-card)] overflow-hidden"
             style={{
               background:
                 "linear-gradient(135deg, hsl(0 84% 97%), hsl(0 60% 99%) 60%, hsl(0 0% 100%))",
@@ -518,7 +518,7 @@ const Index = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-3xl p-8 border border-primary/25 shadow-[var(--shadow-elevated)] overflow-hidden"
+            className="relative rounded-3xl p-5 sm:p-8 border border-primary/25 shadow-[var(--shadow-elevated)] overflow-hidden"
             style={{
               background:
                 "linear-gradient(135deg, hsl(188 95% 96%), hsl(160 60% 97%) 60%, hsl(0 0% 100%))",
@@ -586,12 +586,12 @@ const Index = () => {
         />
         <div className="absolute inset-0 bg-dots opacity-40 -z-10" />
 
-        <div className="grid lg:grid-cols-12 gap-10 p-8 md:p-12 items-center">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 p-5 sm:p-8 md:p-12 items-center">
           <div className="lg:col-span-7 space-y-6">
             <span className="pill bg-card border border-primary/20 text-primary-dark">
               <Satellite className="h-3 w-3" /> TOUROSAT · Satellite Intelligence Layer
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold font-display tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold font-display tracking-tight leading-tight">
               <span className="text-gradient-teal">TOUROSAT</span> превращает спутниковые данные<br className="hidden md:block" />
               {" "}в туристическую экономику.
             </h2>
@@ -726,7 +726,7 @@ const Index = () => {
 
       {/* ============== BOTTOM CTA ============== */}
       <section
-        className="relative rounded-[2rem] overflow-hidden p-10 md:p-16 shadow-[var(--shadow-premium)]"
+        className="relative rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden p-6 sm:p-10 md:p-16 shadow-[var(--shadow-premium)]"
         style={{ background: "var(--gradient-hero)" }}
       >
         <div
@@ -740,15 +740,15 @@ const Index = () => {
         <div className="absolute -top-24 -right-24 w-72 h-72 bg-gold/30 rounded-full blur-3xl" />
         <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-primary-glow/40 rounded-full blur-3xl" />
 
-        <div className="relative grid lg:grid-cols-12 gap-10 items-center text-primary-foreground">
+        <div className="relative grid lg:grid-cols-12 gap-8 lg:gap-10 items-center text-primary-foreground">
           <div className="lg:col-span-8 space-y-5">
-            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/25 text-[11px] font-bold tracking-[0.18em] uppercase backdrop-blur">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/25 text-[10px] sm:text-[11px] font-bold tracking-[0.14em] sm:tracking-[0.18em] uppercase backdrop-blur">
               <Satellite className="h-3 w-3" /> Ready for demo · Series-A grade
             </span>
-            <h2 className="text-4xl md:text-6xl font-extrabold font-display leading-[1.05] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold font-display leading-[1.05] tracking-tight">
               От спутника — <span className="text-gold-light">к доходу</span> каждой юрты.
             </h2>
-            <p className="text-base md:text-lg opacity-90 font-medium max-w-xl">
+            <p className="text-sm sm:text-base md:text-lg opacity-90 font-medium max-w-xl">
               Для владельцев — больше дохода. Для туристов — лучший выбор.
               Для Фонда — прозрачный поток и точные решения.
             </p>
