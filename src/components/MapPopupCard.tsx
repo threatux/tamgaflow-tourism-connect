@@ -79,7 +79,7 @@ export const MapPopupCard = ({ point, onPay, onDetails }: MapPopupCardProps) => 
       </div>
 
       {/* Description */}
-      <p className="px-5 text-[13px] leading-relaxed text-slate-600 line-clamp-3">
+      <p className="px-5 text-[13px] leading-relaxed text-muted-foreground line-clamp-3">
         {point.description}
       </p>
 
