@@ -1,6 +1,6 @@
 import { MOCK_REST_POINTS, type MockRestPoint } from "./restPoints";
 
-export const FUND_SHARE_RATE = 0.05; // 5% Fund share
+export const FUND_SHARE_RATE = 0.12; // 12% Platform/Fund share (88/12 split)
 
 export type TransactionStatus = "completed" | "processing" | "settled";
 
@@ -142,7 +142,7 @@ export const FUND_KPIS: FundKpi[] = [
   },
   {
     key: "fund",
-    label: "Доля Фонда (5%)",
+    label: "Доля Фонда (12%)",
     value: totalFund,
     format: "currency",
     delta: 14.1,

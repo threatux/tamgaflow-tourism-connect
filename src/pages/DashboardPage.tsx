@@ -85,7 +85,7 @@ const DashboardPage = () => {
             </h1>
             <p className="mt-4 text-base text-muted-foreground max-w-xl leading-relaxed">
               Реальное движение туристических платежей, аналитика TOUROSAT AI и сценарии распределения средств.
-              Доля Фонда — <span className="font-bold text-gold-deep">5%</span> от каждой транзакции в системе TamgaFlow.
+              Доля Фонда — <span className="font-bold text-gold-deep">12%</span> от каждой транзакции в системе TamgaFlow.
             </p>
           </div>
 
@@ -102,7 +102,7 @@ const DashboardPage = () => {
               <p className="text-[10px] uppercase tracking-[0.16em] font-bold opacity-80">Status</p>
               <p className="text-[13px] mt-1 font-bold inline-flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
-                Live · 5% Fund layer active
+                Live · 12% Fund layer active
               </p>
             </div>
           </div>
@@ -129,7 +129,7 @@ const DashboardPage = () => {
         <SectionHeader
           eyebrow="Live operations"
           title="Поток транзакций в реальном времени"
-          subtitle="Каждая транзакция автоматически отделяет 5% в Фонд. Поток обновляется каждые несколько секунд."
+          subtitle="Каждая транзакция автоматически отделяет 12% в Фонд. Поток обновляется каждые несколько секунд."
           icon={Activity}
         />
         <LivePaymentStream />

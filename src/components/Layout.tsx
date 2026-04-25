@@ -17,7 +17,7 @@ const Layout = () => (
           <span className="font-bold text-foreground">TamgaFlow</span>
           <span className="opacity-60">· Powered by TOUROSAT</span>
         </div>
-        <p className="font-medium">© 2025 Team THREATUX · Tourism Revenue Hackathon</p>
+        <p className="font-medium">© 2026 Team THREATUX · Tourism Revenue Hackathon</p>
         <div className="flex items-center gap-4 text-[10px] uppercase tracking-wider font-semibold opacity-70">
           <span>🛰 Sentinel-2</span>
           <span>🗺 SRTM</span>
