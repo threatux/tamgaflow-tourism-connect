@@ -10,6 +10,8 @@ import { SplitVisualization } from "@/components/SplitVisualization";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Check } from "lucide-react";
+import { USE_MOCKS, API_BASE_URL } from "@/config";
+import { createPayment } from "@/mocks/api";
 
 interface ServiceItem {
   icon: string;
@@ -103,17 +105,19 @@ const TouristPage = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:8000/api/tamga/payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          point_name: selectedPoint,
-          services: selected.map(({ name, icon, price_som }) => ({ name, icon, price_som })),
-          tourist_name: name,
-          tourist_country: country,
-        }),
-      });
-      const data = await res.json();
+      const payload = {
+        point_name: selectedPoint,
+        services: selected.map(({ name, icon, price_som }) => ({ name, icon, price_som })),
+        tourist_name: name,
+        tourist_country: country,
+      };
+      const data = USE_MOCKS
+        ? await createPayment(payload)
+        : await fetch(`${API_BASE_URL}/api/tamga/payment`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }).then((r) => r.json());
       setReceipt({ ...data, point_name: selectedPoint });
       fireConfetti();
     } catch {
