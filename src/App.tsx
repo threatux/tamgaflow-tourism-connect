@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "@/components/Layout";
 import Index from "@/pages/Index";
 import OwnerPage from "@/pages/OwnerPage";
+import OwnerDashboardPage from "@/pages/OwnerDashboardPage";
 import TouristPage from "@/pages/TouristPage";
 import ConciergePage from "@/pages/ConciergePage";
 import RestPointDetailPage from "@/pages/RestPointDetailPage";
@@ -26,6 +27,7 @@ const App = () => (
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/owner" element={<OwnerPage />} />
+            <Route path="/owner/dashboard" element={<OwnerDashboardPage />} />
             <Route path="/tourist" element={<TouristPage />} />
             <Route path="/concierge" element={<ConciergePage />} />
             <Route path="/point/:id" element={<RestPointDetailPage />} />
