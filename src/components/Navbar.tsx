@@ -2,9 +2,10 @@ import { NavLink } from "react-router-dom";
 
 const navItems = [
   { to: "/", label: "Главная" },
+  { to: "/tourist", label: "Discover" },
+  { to: "/concierge", label: "AI Concierge" },
   { to: "/map", label: "Карта" },
   { to: "/owner", label: "Владельцу" },
-  { to: "/tourist", label: "Туристу" },
   { to: "/dashboard", label: "Фонд" },
 ];
 
