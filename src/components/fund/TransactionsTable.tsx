@@ -147,7 +147,7 @@ export const TransactionsTable = () => {
           <span className="font-bold text-foreground tabular-nums">{fmtCurrency(totalGross)}</span>
         </div>
         <div className="text-right md:text-left">
-          <span className="text-muted-foreground">Доля Фонда (5%): </span>
+          <span className="text-muted-foreground">Доля Фонда (12%): </span>
           <span className="font-extrabold text-gold-deep tabular-nums">{fmtCurrency(totalFund)}</span>
         </div>
       </div>
@@ -177,7 +177,7 @@ export const TransactionsTable = () => {
               </th>
               <th className="py-3 px-4 font-bold text-right">
                 <button onClick={() => toggleSort("fund")} className="inline-flex items-center gap-1 hover:text-foreground ml-auto">
-                  Fund 5% <ArrowUpDown className="h-3 w-3" />
+                  Fund 12% <ArrowUpDown className="h-3 w-3" />
                 </button>
               </th>
               <th className="py-3 px-6 font-bold text-right">Статус</th>

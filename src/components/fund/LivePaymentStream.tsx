@@ -119,7 +119,7 @@ export const LivePaymentStream = () => {
           <p className="text-base font-extrabold font-display tabular-nums mt-0.5">{filtered.length}</p>
         </div>
         <div>
-          <p className="text-[10px] uppercase tracking-[0.16em] text-white/45 font-bold">Fund share (5%)</p>
+          <p className="text-[10px] uppercase tracking-[0.16em] text-white/45 font-bold">Fund share (12%)</p>
           <p className="text-base font-extrabold font-display tabular-nums mt-0.5 text-gold-light">
             {fmtCurrency(liveFundTotal)}
           </p>
@@ -178,7 +178,7 @@ export const LivePaymentStream = () => {
                   <p className="font-extrabold text-gold-light tabular-nums font-display">
                     +{fmtCurrency(tx.fundShare)}
                   </p>
-                  <p className="text-[10px] text-white/40">to Fund · 5%</p>
+                  <p className="text-[10px] text-white/40">to Fund · 12%</p>
                 </div>
                 <div className="col-span-1 text-right">
                   <span
