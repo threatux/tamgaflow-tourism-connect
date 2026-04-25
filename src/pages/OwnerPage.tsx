@@ -7,6 +7,8 @@ import { WeatherBadge } from "@/components/WeatherBadge";
 import { TourosatScore } from "@/components/TourosatScore";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { USE_MOCKS, API_BASE_URL } from "@/config";
+import { createOwnerListing } from "@/mocks/api";
 
 const MOCK_CARD = {
   card: {
@@ -52,12 +54,13 @@ const OwnerPage = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/api/tamga/generate-card", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ description, lat, lon }),
-      });
-      const data = await res.json();
+      const data = USE_MOCKS
+        ? await createOwnerListing({ description, lat, lon })
+        : await fetch(`${API_BASE_URL}/api/tamga/generate-card`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ description, lat, lon }),
+          }).then((r) => r.json());
       setResult(data);
     } catch {
       setResult(MOCK_CARD as ApiResponse);
