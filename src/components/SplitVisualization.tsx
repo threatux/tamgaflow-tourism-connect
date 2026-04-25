@@ -8,24 +8,17 @@ interface SplitVisualizationProps {
 const segments = [
   {
     key: "owner",
-    label: "Владельцу",
-    icon: "👤",
+    label: "Владельцу Rest Point",
+    icon: "🏠",
     pct: 88,
     color: "hsl(var(--split-owner))",
   },
   {
     key: "platform",
     label: "TamgaFlow",
-    icon: "🔧",
-    pct: 7,
+    icon: "⚡",
+    pct: 12,
     color: "hsl(var(--split-platform))",
-  },
-  {
-    key: "fund",
-    label: "Фонд КР",
-    icon: "🏛",
-    pct: 5,
-    color: "hsl(var(--split-fund))",
   },
 ];
 
@@ -38,14 +31,14 @@ export const SplitVisualization = ({ total, compact = false }: SplitVisualizatio
             Распределение платежа
           </h3>
           <span className="text-[10px] font-bold text-muted-foreground tracking-wider px-2 py-0.5 rounded-full bg-muted">
-            88 / 7 / 5
+            88 / 12
           </span>
         </div>
       )}
 
       {/* Stacked bar with shimmer */}
       <div className="relative">
-        <div className="flex h-6 w-full overflow-hidden rounded-full bg-muted shadow-inner ring-1 ring-border/50">
+        <div className="flex h-7 w-full overflow-hidden rounded-full bg-muted shadow-inner ring-1 ring-border/50">
           {segments.map((s, i) => (
             <motion.div
               key={s.key}
@@ -87,12 +80,12 @@ export const SplitVisualization = ({ total, compact = false }: SplitVisualizatio
               transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
               className="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-card border border-border/60 hover:border-border hover:shadow-[var(--shadow-card)] transition-all"
               style={{
-                background: `linear-gradient(135deg, ${s.color}08, transparent)`,
+                background: `linear-gradient(135deg, ${s.color}10, transparent)`,
               }}
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div
-                  className="h-11 w-11 shrink-0 rounded-2xl flex items-center justify-center text-xl shadow-sm"
+                  className="h-12 w-12 shrink-0 rounded-2xl flex items-center justify-center text-xl shadow-sm"
                   style={{
                     background: `linear-gradient(135deg, ${s.color}33, ${s.color}11)`,
                     border: `1px solid ${s.color}55`,
@@ -107,7 +100,7 @@ export const SplitVisualization = ({ total, compact = false }: SplitVisualizatio
                     className="text-[11px] font-bold tabular-nums tracking-wider"
                     style={{ color: s.color }}
                   >
-                    {s.pct}%
+                    {s.pct}% от платежа
                   </p>
                 </div>
               </div>
