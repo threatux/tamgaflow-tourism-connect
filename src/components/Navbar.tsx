@@ -92,7 +92,7 @@ const Navbar = () => {
 
       {/* Mobile fullscreen menu */}
       {open && (
-        <div className="md:hidden fixed inset-0 top-[64px] z-40 bg-background/98 backdrop-blur-xl animate-fade-in overflow-y-auto">
+        <div className="md:hidden fixed inset-0 top-[64px] z-[1090] bg-background/98 backdrop-blur-xl animate-fade-in overflow-y-auto">
           <div className="container px-4 py-6 flex flex-col gap-2">
             {navItems.map((item) => (
               <NavLink
