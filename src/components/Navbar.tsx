@@ -34,7 +34,7 @@ const Navbar = () => {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 glass-strong border-b border-border/60">
+    <header className="sticky top-0 z-[1100] glass-strong border-b border-border/60">
       <div className="container flex items-center justify-between h-[64px] sm:h-[72px] px-4 sm:px-6">
         <NavLink to="/" className="flex items-center gap-2 sm:gap-2.5 group min-w-0">
           <div className="relative h-9 w-9 sm:h-10 sm:w-10 rounded-2xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-[var(--shadow-glow-teal)] group-hover:scale-105 transition-premium shrink-0">
